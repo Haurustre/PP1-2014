@@ -9,7 +9,7 @@ int getIndiceXY(int x, int y, Matrice m){
   return(ind);
 }
 
-Matrice initMatrice(int largeur, int hauteur){
+Matrice initMatrice(int largeur){
   Matrice m = malloc(sizeof(struct matrice));
   m->tailleMat = largeur*largeur;
   m->largeur = largeur;
@@ -41,7 +41,7 @@ void showMatrice(Matrice m){
   printf("Matrice %d x %d :\n",m->largeur,m->largeur);
   int i;
   for(i = 0; i < m->tailleMat; i++){
-    printf(" %4f",m->mat[i]);
+    printf(" %f",m->mat[i]);
     if(i%(m->largeur) == 1)
       printf("\n");
   }
