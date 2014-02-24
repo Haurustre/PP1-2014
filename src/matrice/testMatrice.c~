@@ -1,7 +1,0 @@
-#include "matrice.h"
-#include <cstdlib>
-#include <stdio>
-int main(){
-  print("test");
-  return EXIT_SUCCESS;
-}
