@@ -1,8 +1,15 @@
 #ifndef __GRAPHE_H__
 #define __GRAPHE_H__
 
-#include "arc.h"
 #include <stdbool.h>
+
+struct arc{
+  int sommetA;
+  int sommetB;
+  double distance;
+};
+
+typedef struct arc * Arc;
 
 struct Adj{
   int nbAdj;
