@@ -18,8 +18,16 @@ bool estAdjacent(int s, Arc a){
   return( (s == a->sommetA) || (s == a->sommetB) );
 }
 
-void toString(Arc a){
-  printf("Arc : Sommet A:%d  Sommet B:%d\n",a->sommetA,a->sommetB);
+int getSommetA(Arc a){
+  return a->sommetA;
+}
+
+int getSommetB(Arc a){
+  return a->sommetB;
+}
+
+void afficherArc(Arc a){
+  printf("Arc : Sommet A:%d  Sommet B:%d ",a->sommetA,a->sommetB);
   printf("Distance:%f\n",a->distance);
 }
 

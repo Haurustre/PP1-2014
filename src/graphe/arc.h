@@ -15,8 +15,10 @@ Arc initArc(int,int,double);
 
 double getDistance(Arc);
 bool estAdjacent(int,Arc);
+int getSommetA(Arc);
+int getSommetB(Arc);
 
-void toString(Arc);
+void afficherArc(Arc);
 
 void deleteArc(Arc);
 
