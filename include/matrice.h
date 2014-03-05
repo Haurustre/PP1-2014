@@ -1,11 +1,7 @@
 #ifndef __MATRICE_H__
 #define __MATRICE_H__
 
-struct matrice{
-  double* mat;
-  int largeur;
-  int tailleMat;
-};
+struct matrice;
 
 typedef struct matrice * Matrice;
 
@@ -16,7 +12,7 @@ int getTailleMatrice(Matrice);
 double getCell(int, int, Matrice);
 void setCell(int, int, Matrice, double);
 
-void showMatrice(Matrice);
+void afficherMatrice(Matrice);
 
 void deleteMatrice(Matrice);
 

@@ -3,6 +3,24 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+struct arc{
+  int sommetA;
+  int sommetB;
+  double distance;
+};
+
+typedef struct arc * Arc;
+
+struct Adj{
+  int nbAdj;
+  Arc * arcs;
+};
+
+struct graphe{
+  int nbS;
+  struct Adj *adjs;  
+};
+
 Arc initArc(int a, int b, double dist){
   Arc arc = malloc(sizeof(struct arc));
   arc->sommetA = a;
@@ -35,6 +53,8 @@ void afficherArc(Arc a){
 void deleteArc(Arc a){
   free(a);
 }
+
+//*************Graphe*****************
 
 Graphe initGraphe(int nombreSommet){
   Graphe g = malloc(sizeof(struct graphe));

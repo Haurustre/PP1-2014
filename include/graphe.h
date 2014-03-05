@@ -3,23 +3,8 @@
 
 #include <stdbool.h>
 
-struct arc{
-  int sommetA;
-  int sommetB;
-  double distance;
-};
 
-typedef struct arc * Arc;
-
-struct Adj{
-  int nbAdj;
-  Arc * arcs;
-};
-
-struct graphe{
-  int nbS;
-  struct Adj *adjs;  
-};
+struct graphe;
 
 typedef struct graphe * Graphe;
 

@@ -3,6 +3,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+struct matrice{
+  double* mat;
+  int largeur;
+  int tailleMat;
+};
+
+typedef struct matrice * Matrice;
+
 int getIndiceXY(int x, int y, Matrice m){
   int ind = y * (m->largeur) + x;
   assert(ind >= 0 && ind < m->tailleMat); 
@@ -37,7 +45,7 @@ void setCell(int x, int y, Matrice m, double val){
   m->mat[getIndiceXY(x,y,m)] = val;
 }
 
-void showMatrice(Matrice m){
+void afficherMatrice(Matrice m){
   printf("Matrice %d x %d :\n",m->largeur,m->largeur);
   int i;
   for(i = 0; i < m->tailleMat; i++){
