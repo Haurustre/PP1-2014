@@ -47,6 +47,11 @@ void setCell(int x, int y, Matrice m, double val){
   m->mat[getIndiceXY(x,y,m)] = val;
 }
 
+void setIndMatrice(int ind, Matrice m, double val){
+  assert(ind > -1 && ind < m->tailleMat);
+  m->mat[ind] = val;
+}
+
 void afficherMatrice(Matrice m){
   printf("Matrice %d x %d :\n",m->largeur,m->largeur);
   int i,j=0;

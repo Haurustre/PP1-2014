@@ -9,8 +9,11 @@ Matrice initMatrice(int);
 
 int getLargeurMatrice(Matrice);
 int getTailleMatrice(Matrice);
+
 double getCell(int, int, Matrice);
 void setCell(int, int, Matrice, double);
+
+void setIndMatrice(int, Matrice, double);
 
 void afficherMatrice(Matrice);
 void afficherMatriceInt(Matrice);
