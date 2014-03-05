@@ -9,3 +9,4 @@ add_library(matrice SHARED src/matrice/matrice.c)
 add_library(graphe SHARED src/graphe/graphe.c)
 
 add_executable(src/testTSP src/testTSP.c)
+TARGET_LINK_LIBRARIES(src/testTSP matrice graphe)

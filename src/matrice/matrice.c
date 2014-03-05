@@ -19,9 +19,11 @@ int getIndiceXY(int x, int y, Matrice m){
 
 Matrice initMatrice(int largeur){
   Matrice m = malloc(sizeof(struct matrice));
+  assert( m != NULL);
   m->tailleMat = largeur*largeur;
   m->largeur = largeur;
-  m->mat = malloc(sizeof(int)*m->tailleMat);
+  m->mat = malloc(sizeof(double)*m->tailleMat);
+  assert(m->mat != NULL);
   int i;
   for(i = 0; i < m->tailleMat; i++)
     m->mat[i] = 0;
@@ -47,11 +49,14 @@ void setCell(int x, int y, Matrice m, double val){
 
 void afficherMatrice(Matrice m){
   printf("Matrice %d x %d :\n",m->largeur,m->largeur);
-  int i;
+  int i,j=0;
   for(i = 0; i < m->tailleMat; i++){
     printf(" %f",m->mat[i]);
-    if(i%(m->largeur) == 1)
+    j++;
+    if((m->largeur) == j){
       printf("\n");
+      j=0;
+    }
   }
 }
 
