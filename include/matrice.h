@@ -13,6 +13,7 @@ double getCell(int, int, Matrice);
 void setCell(int, int, Matrice, double);
 
 void afficherMatrice(Matrice);
+void afficherMatriceInt(Matrice);
 
 void deleteMatrice(Matrice);
 

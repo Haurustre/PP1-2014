@@ -60,6 +60,19 @@ void afficherMatrice(Matrice m){
   }
 }
 
+void afficherMatriceInt(Matrice m){
+  printf("Matrice %d x %d :\n",m->largeur,m->largeur);
+  int i,j=0;
+  for(i = 0; i < m->tailleMat; i++){
+    printf(" %d",(int)m->mat[i]);
+    j++;
+    if((m->largeur) == j){
+      printf("\n");
+      j=0;
+    }
+  }
+}
+
 void deleteMatrice(Matrice m){
   free(m->mat);
   free(m);
