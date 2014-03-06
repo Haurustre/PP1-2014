@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <matrice.h>
 #include <graphe.h>
-#include " heuristique.c"
+#include "../../include/heuristique.c"
 
 
 /*************************************************************
