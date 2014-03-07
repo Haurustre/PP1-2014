@@ -4,12 +4,16 @@
 #include <stdio.h>
 #include <errno.h>
 
+/*******************************************************
+ *Auteur: Ghislain Hudry                Date:06/03/14  *
+ *Charge une Matrice en fonction du test fichier ouvert*
+ *******************************************************/
 Matrice chargerMatrice(){
   Matrice m;
   char var[1000];
-  int * tailleMatrice;
+  int * tailleMatrice = malloc(sizeof(int));
   int i;
-  float *valIndiceMatrice;
+  float *valIndiceMatrice = malloc(sizeof(float));
 
   printf("Ouverture du fichier tsp...\n");
   FILE * tsp = fopen("../res/exemple10.tsp","r");
@@ -41,10 +45,68 @@ Matrice chargerMatrice(){
     fclose(tsp);
     printf(" fait\n");
   }
-
+  free(valIndiceMatrice);
+  free(tailleMatrice);
   return m;
 }
+/*
+bool parcouru(int * t, int taille){
+  int i;
+  for(i = 0; i<taille; i++){
+    if(t[i] == -1)
+      return false;
+  }
+  return true;
+}
 
+int villePlusProche(int villeTmp,int * villeSuiv, int * t, Matrice m){
+  int indMin;
+  int distance = getCell(villeTmp,0);
+  for( i = 1; i < getLargeurMatrice(m); i++){
+    if(t[i] == -1){
+      if(distance < getCell(villeTmp,i,m)){
+	distance = getCell(villeTmp,i,m);
+        indMin = i;
+      }
+    }
+  }
+  t[indMin] = 1;
+  return indMin;
+}
+
+int * heuristique(Matrice m){
+  int i;
+  int villeTmp, villeSuiv;
+  int tailleM = getLargeurMatrice(m);
+  int * tmp = malloc(sizeof(int)*getLargeurMatrice(m));
+  int * parcouruVille = malloc(sizeof(int)*getLargeurMatrice(m));
+  for(i =0; i < getLargeurMatrice(m) ; i++)
+    parcouruVille[i] = -1;
+
+  int * plusCourt = malloc(sizeof(int)*getLargeurMatrice(m));
+  double distance = -1;
+  
+  for(i =0; i < tailleM ; i++){
+    tmp[0] = i;
+    parcouru[i] = 1;
+    villeTmp = i;
+    while(!parcouru(parcouruVille,tailleM)){
+      tmp[villeTmp] = villePlusProche(villeTmp,villeSuiv,parcouruVille,m);
+      villeTmp = villeSuiv;
+    }
+
+    if((distance == -1) || (distanceParcourt(tmp) < distance)){
+      for(i =0; i < getLargeurMatrice(m) ; i++)
+	plusCourt[i] = tmp[i];
+      distance = distanceParcourt(plusCourt);
+    }
+  }
+  free(tmp);
+  free(parcouruVille);
+  printf("meilleurs distance:%f",distance);
+  return plusCourt;
+}
+*/
 int main(){
   Matrice m = chargerMatrice();
   afficherMatriceInt(m);
