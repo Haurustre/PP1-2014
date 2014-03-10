@@ -44,7 +44,7 @@ int sommetPlusProche(int sommetDepart, matrice m, int *parcouru){
 **************************************************************/
 
 
-int *  heuristique(matrice m, sommetDepart){
+int *  heuristique(matrice m, int sommetDepart){
   int j=0;
   int tailleM=getTailleMatrice(m)
   int * parcouru= malloc(tailleM*sizeof(*int));
@@ -52,7 +52,7 @@ int *  heuristique(matrice m, sommetDepart){
     parcouru[i]=-1;
   while( j<= tailleM){
     parcouru[sommetDepart]=sommetPlusProche(sommetDepart, m, parcouru);
-    sommetDepart=parcouru[sommetDepart]
+    sommetDepart=parcouru[sommetDepart];
     j++;
   }
   return parcouru;
