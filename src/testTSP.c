@@ -49,68 +49,73 @@ Matrice chargerMatrice(){
   free(tailleMatrice);
   return m;
 }
-/*
-bool parcouru(int * t, int taille){
+
+bool parcouru(int ville, int * trajet, int ind, Matrice m){
   int i;
-  for(i = 0; i<taille; i++){
-    if(t[i] == -1)
-      return false;
+  for(i = 0; i < ind; i++){
+    if(ville == trajet[i] || i == ind)
+      return true;
   }
-  return true;
+  return false;
 }
 
-int villePlusProche(int villeTmp,int * villeSuiv, int * t, Matrice m){
-  int indMin;
-  int distance = getCell(villeTmp,0);
-  for( i = 1; i < getLargeurMatrice(m); i++){
-    if(t[i] == -1){
-      if(distance < getCell(villeTmp,i,m)){
-	distance = getCell(villeTmp,i,m);
-        indMin = i;
-      }
-    }
-  }
-  t[indMin] = 1;
-  return indMin;
-}
-
-int * heuristique(Matrice m){
-  int i;
-  int villeTmp, villeSuiv;
-  int tailleM = getLargeurMatrice(m);
-  int * tmp = malloc(sizeof(int)*getLargeurMatrice(m));
-  int * parcouruVille = malloc(sizeof(int)*getLargeurMatrice(m));
-  for(i =0; i < getLargeurMatrice(m) ; i++)
-    parcouruVille[i] = -1;
-
-  int * plusCourt = malloc(sizeof(int)*getLargeurMatrice(m));
+int villeProche( int * trajet, int ind, Matrice m){
   double distance = -1;
-  
-  for(i =0; i < tailleM ; i++){
-    tmp[0] = i;
-    parcouru[i] = 1;
-    villeTmp = i;
-    while(!parcouru(parcouruVille,tailleM)){
-      tmp[villeTmp] = villePlusProche(villeTmp,villeSuiv,parcouruVille,m);
-      villeTmp = villeSuiv;
-    }
+  int villeProche = -1;
+  int i;
+  for(i = 0; i < getLargeurMatrice(m); i++){
+    printf("ind: %d\n",ind);
+    if(!parcouru(i,trajet,ind,m)){
+      if(distance == -1 || getCell(ind,i,m)<distance){
+	distance = getCell(ind,i,m);
+	villeProche = i;
+      }
+    }  
+  }
+  return villeProche;
+}
 
-    if((distance == -1) || (distanceParcourt(tmp) < distance)){
-      for(i =0; i < getLargeurMatrice(m) ; i++)
-	plusCourt[i] = tmp[i];
-      distance = distanceParcourt(plusCourt);
+void heuristiqueTest(Matrice m){
+  printf("Calcule heuristique du chemin le plus court...\n");
+
+  double distance;
+  double distanceCourt = -1;
+  int nbVilles = getLargeurMatrice(m);
+  int * trajet = malloc(sizeof(int) * nbVilles);
+  int * trajetCourt = malloc(sizeof(int) * nbVilles);
+  int i,j,k;
+  for(i = 0; i < nbVilles; i++){
+    printf("trajet %d:\n",i);
+    trajet[0] = i;
+    distance = 0;
+    printf("Ville 0 : %d\n",i);
+    for(j = 1; j < nbVilles; j++){
+      trajet[j] = villeProche(trajet,j-1,m);
+      printf("Ville %d : %d\n", j, trajet[j]);
+      distance += getCell(trajet[j-1],trajet[j],m);
+    }
+    printf("Distance : %f\n",distance);
+    if(distanceCourt == -1 || distanceCourt > distance){
+      for(k = 0; k < nbVilles; k++){
+	trajetCourt[k] = trajet[k];
+	trajet[k] = 0;
+      }
+      distanceCourt = distance;
     }
   }
-  free(tmp);
-  free(parcouruVille);
-  printf("meilleurs distance:%f",distance);
-  return plusCourt;
+  printf("Le Trajet le plus court mesure %fm\n",distance);
+  for(i = 0; i < nbVilles; i++)
+    printf("%d ",trajetCourt[i]);
+  printf("\n");
+
+  free(trajet);
+  free(trajetCourt);
 }
-*/
+
 int main(){
   Matrice m = chargerMatrice();
   afficherMatriceInt(m);
-
+  heuristiqueTest(m);
   deleteMatrice(m);
   return 0;
 }
