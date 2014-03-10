@@ -16,9 +16,9 @@ Matrice chargerMatrice(){
   float *valIndiceMatrice = malloc(sizeof(float));
 
   printf("Ouverture du fichier tsp...\n");
-  FILE * tsp = fopen("../res/exemple10.tsp","r");
+  FILE * tsp = fopen("../res/exemple14.tsp","r");
   if(tsp == NULL)
-    tsp = fopen("res/exemple10.tsp","r");
+    tsp = fopen("res/exemple14.tsp","r");
   if(tsp == NULL){
     printf(" erreur %d\n",errno);
     if(errno == ENOENT)
@@ -52,8 +52,9 @@ Matrice chargerMatrice(){
 
 bool parcouru(int ville, int * trajet, int ind, Matrice m){
   int i;
-  for(i = 0; i < ind; i++){
-    if(ville == trajet[i] || i == ind)
+
+  for(i = 0; i < ind+1; i++){
+    if(ville == trajet[i])
       return true;
   }
   return false;
@@ -64,7 +65,6 @@ int villeProche( int * trajet, int ind, Matrice m){
   int villeProche = -1;
   int i;
   for(i = 0; i < getLargeurMatrice(m); i++){
-    printf("ind: %d\n",ind);
     if(!parcouru(i,trajet,ind,m)){
       if(distance == -1 || getCell(ind,i,m)<distance){
 	distance = getCell(ind,i,m);
@@ -85,16 +85,12 @@ void heuristiqueTest(Matrice m){
   int * trajetCourt = malloc(sizeof(int) * nbVilles);
   int i,j,k;
   for(i = 0; i < nbVilles; i++){
-    printf("trajet %d:\n",i);
     trajet[0] = i;
     distance = 0;
-    printf("Ville 0 : %d\n",i);
     for(j = 1; j < nbVilles; j++){
       trajet[j] = villeProche(trajet,j-1,m);
-      printf("Ville %d : %d\n", j, trajet[j]);
       distance += getCell(trajet[j-1],trajet[j],m);
     }
-    printf("Distance : %f\n",distance);
     if(distanceCourt == -1 || distanceCourt > distance){
       for(k = 0; k < nbVilles; k++){
 	trajetCourt[k] = trajet[k];
@@ -103,7 +99,7 @@ void heuristiqueTest(Matrice m){
       distanceCourt = distance;
     }
   }
-  printf("Le Trajet le plus court mesure %fm\n",distance);
+  printf("Le Trajet le plus court mesure %f\n",distanceCourt);
   for(i = 0; i < nbVilles; i++)
     printf("%d ",trajetCourt[i]);
   printf("\n");
