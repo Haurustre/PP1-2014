@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <matrice.h>
-#include <graphe.h>
-#include "../../include/heuristique.c"
+#include <heuristique.h>
 
 
 /*************************************************************
@@ -58,16 +57,6 @@ int *  heuristique(matrice m, int sommetDepart){
   return parcouru;
       
 }
-/*************************************************************
-*Author:  gustan jimmy                             Date: 05/03/14
-*Return:  rien
-*Param:  tableau des sommets parcouru
-**************************************************************/
-
-void deleteParcouru( int * parcouru){ 
-  free(parcouru);
-}
-  
 			      
 		 
   
