@@ -27,10 +27,12 @@ static void buttonChargerMatrice( GtkWidget *widget,gpointer   data ){
   gtk_widget_destroy (p_dialog);
 }
 
-static void buttonAfficherMatrice( GtkWidget *widget,gpointer   data ){
+static void buttonAfficherMatriceInt( GtkWidget *widget,gpointer   data ){
   afficherMatriceInt(m);
 }
-
+static void buttonAfficherMatrice( GtkWidget *widget,gpointer   data ){
+  afficherMatrice(m);
+}
 static void buttonHeuristiqueMatrice( GtkWidget *widget,gpointer   data ){
   heuristiqueMatrice(m);
 }
@@ -48,7 +50,7 @@ static void destroy( GtkWidget *widget,gpointer   data ){
 int main( int   argc,char *argv[] ){
 
     GtkWidget *window;
-    GtkWidget *button[3];
+    GtkWidget *button[4];
     GtkWidget *box;
 
     gtk_init (&argc, &argv);
@@ -65,18 +67,21 @@ int main( int   argc,char *argv[] ){
     gtk_container_add(GTK_CONTAINER (window),box);
 
     button[0] = gtk_button_new_with_label("Charger Matrice");
-    button[1] = gtk_button_new_with_label("Afficher la Matrice");
-    button[2] = gtk_button_new_with_label("Calculer heuristique");
+    button[1] = gtk_button_new_with_label("Afficher la Matrice (entiers)");
+    button[2] = gtk_button_new_with_label("Afficher la Matrice");
+    button[3] = gtk_button_new_with_label("Calculer heuristique");
 
     gtk_box_pack_start(GTK_BOX(box), button[0], FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box), button[1], FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box), button[2], FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), button[3], FALSE, FALSE, 0);
 
     gtk_widget_show_all(window);
     
     g_signal_connect(button[0], "clicked",G_CALLBACK(buttonChargerMatrice), NULL);
-    g_signal_connect(button[1], "clicked",G_CALLBACK(buttonAfficherMatrice), NULL);
-    g_signal_connect(button[2], "clicked",G_CALLBACK(buttonHeuristiqueMatrice), NULL);
+    g_signal_connect(button[1], "clicked",G_CALLBACK(buttonAfficherMatriceInt), NULL);
+    g_signal_connect(button[2], "clicked",G_CALLBACK(buttonAfficherMatrice), NULL);
+    g_signal_connect(button[3], "clicked",G_CALLBACK(buttonHeuristiqueMatrice), NULL);
 
     gtk_main ();
     
