@@ -2,12 +2,11 @@
 #define __HEURISTIQUE_H__
 
 #include <stdbool.h>
+#include <matrice.h>
 
-double sommetsDistanceMatrice(int , int , matrice )
-int sommetPlusProche(int , matrice , int *)
-int * heuristique(matrice ,)
-void deleteParcouru( int * )
+int * heuristiqueSommet(Matrice);
 
+void heuristiqueMatrice(Matrice);
 
 
 #endif
