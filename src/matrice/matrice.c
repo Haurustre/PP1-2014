@@ -100,7 +100,7 @@ Matrice chargerMatrice(char * path){
       printf("Erreur inconnue\n");
   }
   else{
-    printf("Creation de la matrice...\n");
+    printf("Creation de la matrice... ");
     fscanf(tsp,"%s %s",var,var);
     fscanf(tsp,"%s %s",var,var);
     fscanf(tsp,"%s %d",var,tailleMatrice);
