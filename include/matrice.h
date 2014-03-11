@@ -1,6 +1,8 @@
 #ifndef __MATRICE_H__
 #define __MATRICE_H__
 
+#include <errno.h>
+
 struct matrice;
 
 typedef struct matrice * Matrice;
@@ -17,6 +19,8 @@ void setIndMatrice(int, Matrice, double);
 
 void afficherMatrice(Matrice);
 void afficherMatriceInt(Matrice);
+
+Matrice chargerMatrice(char * path);
 
 void deleteMatrice(Matrice);
 
