@@ -8,7 +8,6 @@
 static Matrice m;
 
 static void buttonChargerMatrice( GtkWidget *widget,gpointer   data ){
-  //m = chargerMatrice("res/exemple10.tsp");
   GtkWidget *p_dialog = NULL;
 
   p_dialog = gtk_file_chooser_dialog_new ("Charger une Matrice", NULL,
@@ -16,7 +15,7 @@ static void buttonChargerMatrice( GtkWidget *widget,gpointer   data ){
                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                           GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
                                           NULL);
-  FileFilter filtre;
+
   if (gtk_dialog_run (GTK_DIALOG (p_dialog)) == GTK_RESPONSE_ACCEPT){
     gchar *file_name = NULL;
 
