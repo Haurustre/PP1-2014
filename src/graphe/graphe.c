@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 
 struct arc{
   int sommetA;
@@ -66,7 +67,50 @@ Graphe initGraphe(int nombreSommet){
     g->adjs[i].arcs = malloc(sizeof(struct arc)* g->nbS);
     g->adjs[i].nbAdj = 0;
   }
+  return g;
+}
 
+Graphe chargerGraphe(char * path){
+  Graphe g;
+  char var[1000];
+  int * nbSommetGraphe = malloc(sizeof(int));
+  float * valArcGraphe = malloc(sizeof(float));
+
+printf("Ouverture du fichier %s\n",path);
+  FILE * tsp = fopen(path,"r");
+
+  if(tsp == NULL){
+    printf(" erreur %d\n",errno);
+    if(errno == ENOENT)
+      printf("Le fichier n'existe pas !\n");
+    else
+      printf("Erreur inconnue\n");
+  }
+  else{
+    printf("Creation du Graphe... ");
+    fscanf(tsp,"%s %s",var,var);
+    fscanf(tsp,"%s %s",var,var);
+    fscanf(tsp,"%s %d",var,nbSommetGraphe);
+    g = initGraphe(*nbSommetGraphe);
+    fscanf(tsp,"%s %s",var,var);
+    fscanf(tsp,"%s %s",var,var);
+    fscanf(tsp,"%s %s",var,var);
+    fscanf(tsp,"%s",var);
+    
+    int i,j;
+    for(i=0; i< (*nbSommetGraphe); i++){
+      for(j=0; j< (*nbSommetGraphe); j++){
+	fscanf(tsp,"%f",valArcGraphe);
+	Arc a = initArc(i,j,*valArcGraphe);
+	g->adjs[i].arcs[g->adjs[i].nbAdj++] = a;
+      }
+    }
+
+    fclose(tsp);
+    printf(" fait\n");
+  }
+  free(valArcGraphe);
+  free(nbSommetGraphe);
   return g;
 }
 
@@ -86,6 +130,13 @@ void ajouterArc(int sA, int sB,double dist, Graphe g){
   assert(sommetValide(sB,g));
   Arc b = initArc(sB,sA,dist);
   g->adjs[sB].arcs[g->adjs[sB].nbAdj++] = b;
+}
+
+void supprimerArc(int sA, int sB, Graphe g){
+  assert(sommetValide(sA,g));
+  assert(sommetValide(sB,g));
+  g->adjs[sA].nbAdj = 0;
+  g->adjs[sB].nbAdj = 0;
 }
 
 bool sommetsAdjacent(int sA, int sB, Graphe g){
