@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <heuristique.h>
+#include <mst.h>
 
 static Matrice m;
 static Graphe g;
