@@ -99,8 +99,10 @@ printf("Ouverture du fichier %s\n",path);
     for(i=0; i< (*nbSommetGraphe); i++){
       for(j=0; j< (*nbSommetGraphe); j++){
 	fscanf(tsp,"%f",valArcGraphe);
-	Arc a = initArc(i,j,*valArcGraphe);
-	g->adjs[i].arcs[g->adjs[i].nbAdj++] = a;
+	if(j!=i){
+	  Arc a = initArc(i,j,*valArcGraphe);
+	  g->adjs[i].arcs[g->adjs[i].nbAdj++] = a;
+	}
       }
     }
 
@@ -176,13 +178,13 @@ void deleteGraphe(Graphe g){
   free(g);
 }
 
-Arc * getArcs(int & nbArc,Graphe g){
+Arc * getArcs(int * nbArc,Graphe g){
   int i,j;
   *nbArc = 0;
   Arc * arcs = malloc(sizeof(struct arc)*g->nbS*g->nbS);
   for(i=0;i < g->nbS; i++){
-    for(j=0; j < g->adjs[i]->nbAdj; j++){
-      arc[(*nbArc)++] = g->adjs[i]->arcs[j];
+    for(j=0; j < g->adjs[i].nbAdj; j++){
+      arcs[(*nbArc)++] = g->adjs[i].arcs[j];
     }
   }
 

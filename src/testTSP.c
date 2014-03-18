@@ -74,7 +74,11 @@ static void buttonAfficherGraphe( GtkWidget *widget,gpointer   data ){
     afficherGraphe(g);
 }
 static void buttonCalculerMST( GtkWidget *widget,gpointer   data ){
-  printf("Pas encore implemente\n");
+  if(g == NULL)
+    printf("Erreur: Aucun graphe charge\n");
+  else{
+    calculerMST(g);
+  }
 }
 
 static gboolean delete_event( GtkWidget *widget,GdkEvent  *event,gpointer   data ){

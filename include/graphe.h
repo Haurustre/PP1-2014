@@ -29,6 +29,6 @@ void afficherGraphe(Graphe);//debug
 
 void deleteGraphe(Graphe);
 
-Arc * getArcs(int&,Graphe);
+Arc * getArcs(int*,Graphe);
 
 #endif
