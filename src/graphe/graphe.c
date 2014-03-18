@@ -10,8 +10,6 @@ struct arc{
   double distance;
 };
 
-typedef struct arc * Arc;
-
 struct Adj{
   int nbAdj;
   Arc * arcs;
@@ -176,4 +174,17 @@ void deleteGraphe(Graphe g){
   }
   free(g->adjs);
   free(g);
+}
+
+Arc * getArcs(int & nbArc,Graphe g){
+  int i,j;
+  *nbArc = 0;
+  Arc * arcs = malloc(sizeof(struct arc)*g->nbS*g->nbS);
+  for(i=0;i < g->nbS; i++){
+    for(j=0; j < g->adjs[i]->nbAdj; j++){
+      arc[(*nbArc)++] = g->adjs[i]->arcs[j];
+    }
+  }
+
+  return arcs;
 }

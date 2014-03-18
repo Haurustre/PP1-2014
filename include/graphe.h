@@ -3,10 +3,18 @@
 
 #include <stdbool.h>
 
-
+struct arc;
 struct graphe;
-
+typedef struct arc * Arc;
 typedef struct graphe * Graphe;
+
+Arc initArc(int,int,double);
+double getDistance(Arc);
+bool estAdjacent(int, Arc);
+int getSommetA(Arc);
+int getSommetB(Arc);
+void afficherArc(Arc);
+void deleteArc(Arc);
 
 Graphe initGraphe(int);//Graphe de N sommets
 Graphe chargerGraphe(char * path);//Graphe a partir d'un fichier tsp
@@ -20,5 +28,7 @@ double sommetsDistance(int,int,Graphe);//distance entre deux sommets adjacents
 void afficherGraphe(Graphe);//debug
 
 void deleteGraphe(Graphe);
+
+Arc * getArcs(int&,Graphe);
 
 #endif
