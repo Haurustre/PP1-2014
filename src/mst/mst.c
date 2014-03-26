@@ -4,11 +4,6 @@
 #include <stdio.h>
 #include <time.h>
 
-struct arc{
-  int sommetA;
-  int sommetB;
-  double distance;
-};
 bool toutVisite(bool * t, int taille){
   int i;
   for(i = 0; i < taille; i++)
@@ -28,8 +23,8 @@ void calculerMST(Graphe g){
   int nbVilleT = getNombreSommets(g);
   int nbArcsT;
   Arc * arcsCroissants = getArcs(&nbArcsT,g);
-  Arc * chemin = malloc(sizeof(struct arc)*(nbVilleT-1));
-  Arc * minChemin = malloc(sizeof(struct arc)*(nbVilleT-1));
+  Arc * chemin = malloc(sizeof(Arc)*(nbVilleT-1));
+  Arc * minChemin = malloc(sizeof(Arc)*(nbVilleT-1));
 
   int i;
   Arc arcTmp;
