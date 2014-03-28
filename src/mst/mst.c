@@ -23,8 +23,8 @@ void calculerMST(Graphe g){
   int nbVilleT = getNombreSommets(g);
   int nbArcsT;
   Arc * arcsCroissants = getArcs(&nbArcsT,g);
-  Arc * chemin = malloc(sizeof(Arc)*(nbVilleT-1));
-  Arc * minChemin = malloc(sizeof(Arc)*(nbVilleT-1));
+  Arc * chemin = malloc(sizeof(Arc)*(nbVilleT));
+  Arc * minChemin = malloc(sizeof(Arc)*(nbVilleT));
 
   int i;
   Arc arcTmp;
@@ -71,8 +71,13 @@ void calculerMST(Graphe g){
       }//for
     }//while
 
+    //retour:
+    distance+=sommetsDistance(j,villeActuel,g);
+    chemin[nbVilleT-1] = getArc(villeActuel,j,g);
+
+    
     if(minDistance == -1 || minDistance > distance){//A la fin on teste si le chemin calculé est plus court que le precedent
-      for(i = 0; i < (nbVilleT-1);i++)//SI oui: alors distanceMin et cheminMin prennent ces valeurs
+      for(i = 0; i < (nbVilleT);i++)//SI oui: alors distanceMin et cheminMin prennent ces valeurs
 	minChemin[i] = chemin[i];
       minDistance = distance;
     }
@@ -83,7 +88,7 @@ void calculerMST(Graphe g){
 
 
   printf("Le Trajet le plus court mesure %f\n",minDistance);
-  for(i=0; i<(nbVilleChemin); i++){//affiche les sommets -1
+  for(i=0; i<(nbVilleT); i++){//affiche les sommets -1
     printf("%d ",getSommetA(minChemin[i]));
     distance = i;
   }

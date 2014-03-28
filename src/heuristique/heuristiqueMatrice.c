@@ -51,8 +51,8 @@ void heuristiqueMatrice(Matrice m){
   double distance;
   double distanceCourt = -1;
   int nbVilles = getLargeurMatrice(m);
-  int * trajet = malloc(sizeof(int) * nbVilles);
-  int * trajetCourt = malloc(sizeof(int) * nbVilles);
+  int * trajet = malloc(sizeof(int) * (nbVilles+1));
+  int * trajetCourt = malloc(sizeof(int) * (nbVilles+1));
   int i,j,k;
 
 
@@ -63,16 +63,20 @@ void heuristiqueMatrice(Matrice m){
       trajet[j] = villeProche(trajet,j-1,m);
       distance += getCell(trajet[j-1],trajet[j],m);
     }
+    //retour:
+    trajet[nbVilles] = i;
+    distance += getCell(trajet[nbVilles-1],i,m);
+
     if(distanceCourt == -1 || distanceCourt > distance){
-      for(k = 0; k < nbVilles; k++){
+      for(k = 0; k < nbVilles+1; k++){
 	trajetCourt[k] = trajet[k];
-	trajet[k] = 0;
+	//trajet[k] = 0;
       }
       distanceCourt = distance;
     }
   }
   printf("Le Trajet le plus court mesure %f\n",distanceCourt);
-  for(i = 0; i < nbVilles; i++)
+  for(i = 0; i < nbVilles+1; i++)
     printf("%d ",trajetCourt[i]);
   printf("\n");
 

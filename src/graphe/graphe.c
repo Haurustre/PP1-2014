@@ -148,6 +148,14 @@ bool sommetsAdjacent(int sA, int sB, Graphe g){
   return false;
 }
 
+Arc getArc(int sA, int sB, Graphe g){
+  int i;
+  for(i = 0; i < g->adjs[sA].nbAdj; i++)
+    if(estAdjacent(sB,g->adjs[sA].arcs[i]))
+      return g->adjs[sA].arcs[i];
+  return NULL;
+}
+
 double sommetsDistance(int sA, int sB, Graphe g){
   int i;
   for(i = 0; i < g->adjs[sA].nbAdj; i++)
