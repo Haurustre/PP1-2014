@@ -99,7 +99,8 @@ int main( int   argc,char *argv[] ){
     GtkWidget *window;
     GtkWidget *buttonMatrice[4];
     GtkWidget *buttonGraphe[3];
-    GtkWidget *box;
+    GtkWidget *table;
+    GtkWidget *titre[2];
 
     gtk_init (&argc, &argv);    
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);   
@@ -107,28 +108,33 @@ int main( int   argc,char *argv[] ){
     g_signal_connect(window, "destroy",G_CALLBACK(destroy), NULL);
     
     //---box-------------------------------------
-    box = gtk_vbox_new(TRUE,0);
-    gtk_container_add(GTK_CONTAINER (window),box);
+    table = gtk_table_new(150,150,TRUE);
+    gtk_container_set_border_width(GTK_CONTAINER(window),10); 
+    gtk_container_add(GTK_CONTAINER (window),table);
     //--------Matrice -------------------------------
+    titre[0] = gtk_label_new("Matrice");
     buttonMatrice[0] = gtk_button_new_with_label("Charger Matrice");
     buttonMatrice[1] = gtk_button_new_with_label("Afficher la Matrice (entiers)");
     buttonMatrice[2] = gtk_button_new_with_label("Afficher la Matrice");
     buttonMatrice[3] = gtk_button_new_with_label("Calculer heuristique");
 
-    gtk_box_pack_start(GTK_BOX(box), buttonMatrice[0], FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), buttonMatrice[1], FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), buttonMatrice[2], FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), buttonMatrice[3], FALSE, FALSE, 0);
-    
-    //-------Graphe------------------------------------
 
+    gtk_table_attach_defaults(GTK_TABLE(table),titre[0], 0,150,0,50);
+    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[0], 0,150,50,100);
+    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[1], 0,150,110,160);
+    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[2], 0,150,160,210);
+    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[3], 0,150,220,270);
+    //-------Graphe------------------------------------
+    titre[1] = gtk_label_new("Graphe");
     buttonGraphe[0] = gtk_button_new_with_label("Charger Graphe");
     buttonGraphe[1] = gtk_button_new_with_label("Afficher le Graphe");
     buttonGraphe[2] = gtk_button_new_with_label("Calculer MST");
 
-    gtk_box_pack_start(GTK_BOX(box), buttonGraphe[0], FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), buttonGraphe[1], FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), buttonGraphe[2], FALSE, FALSE, 0);
+    gtk_table_attach_defaults(GTK_TABLE(table), titre[1],150,300,0,50);
+    gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[0],150,300,50,100);
+    gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[1],150,300,110,160);
+    gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[2],150,300,220,270);
+
     //-------Connection des actions-----------------------------------
     gtk_widget_show_all(window);
     
