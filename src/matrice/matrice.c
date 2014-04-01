@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 struct matrice{
   double* mat;
@@ -101,20 +102,22 @@ Matrice chargerMatrice(char * path){
   }
   else{
     printf("Creation de la matrice... ");
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s %d",var,tailleMatrice);
-    m = initMatrice(*tailleMatrice);
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s",var);
-    
-    for(i=0; i< ((*tailleMatrice) * (*tailleMatrice)); i++){
-      fscanf(tsp,"%f",valIndiceMatrice);
-      setIndMatrice(i,m,*valIndiceMatrice);
+    while(strcmp(var, "DIMENSION:") != 0 && !feof(tsp)){
+      fscanf(tsp,"%s",var);
     }
+    fscanf(tsp,"%d",tailleMatrice);
+    m = initMatrice(*tailleMatrice);
 
+    while(strcmp(var, "EDGE_WEIGHT_SECTION") != 0 && !feof(tsp)){
+      fscanf(tsp,"%s",var);
+    }
+    if( ! feof(tsp)){
+      for(i=0; i< ((*tailleMatrice) * (*tailleMatrice)); i++){
+	fscanf(tsp,"%f",valIndiceMatrice);
+	setIndMatrice(i,m,*valIndiceMatrice);
+      }
+      else
+	printf("Erreur lors de la lecture du fichier, DIMENSION doit etre specifie avant EDGE_WEIGHT_SECTION\n");
     fclose(tsp);
     printf(" fait\n");
   }

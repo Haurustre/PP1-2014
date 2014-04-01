@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include <string.h>
 
 struct arc{
   int sommetA;
@@ -73,7 +74,7 @@ Graphe chargerGraphe(char * path){
   int * nbSommetGraphe = malloc(sizeof(int));
   float * valArcGraphe = malloc(sizeof(float));
 
-printf("Ouverture du fichier %s\n",path);
+  printf("Ouverture du fichier %s\n",path);
   FILE * tsp = fopen(path,"r");
 
   if(tsp == NULL){
@@ -85,26 +86,30 @@ printf("Ouverture du fichier %s\n",path);
   }
   else{
     printf("Creation du Graphe... ");
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s %d",var,nbSommetGraphe);
+    while(strcmp(var, "DIMENSION:") != 0 && !feof(tsp)){
+      fscanf(tsp,"%s",var);
+    }
+    fscanf(tsp,"%d",nbSommetGraphe);
     g = initGraphe(*nbSommetGraphe);
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s %s",var,var);
-    fscanf(tsp,"%s",var);
     
-    int i,j;
-    for(i=0; i< (*nbSommetGraphe); i++){
-      for(j=0; j< (*nbSommetGraphe); j++){
-	fscanf(tsp,"%f",valArcGraphe);
-	if(j!=i){
-	  Arc a = initArc(i,j,*valArcGraphe);
-	  g->adjs[i].arcs[g->adjs[i].nbAdj++] = a;
+    while(strcmp(var, "EDGE_WEIGHT_SECTION") != 0 && !feof(tsp)){
+      fscanf(tsp,"%s",var);
+    }
+
+    if( ! feof(tsp)){
+      int i,j;
+      for(i=0; i< (*nbSommetGraphe); i++){
+	for(j=0; j< (*nbSommetGraphe); j++){
+	  fscanf(tsp,"%f",valArcGraphe);
+	  if(j!=i){
+	    Arc a = initArc(i,j,*valArcGraphe);
+	    g->adjs[i].arcs[g->adjs[i].nbAdj++] = a;
+	  }
 	}
       }
     }
-
+    else
+      printf("Erreur lors de la lecture du fichier, DIMENSION doit etre specifie avant EDGE_WEIGHT_SECTION\n");
     fclose(tsp);
     printf(" fait\n");
   }
@@ -112,6 +117,7 @@ printf("Ouverture du fichier %s\n",path);
   free(nbSommetGraphe);
   return g;
 }
+
 
 int getNombreSommets(Graphe g){
   return g->nbS;
