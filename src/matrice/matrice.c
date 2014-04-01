@@ -116,8 +116,10 @@ Matrice chargerMatrice(char * path){
 	fscanf(tsp,"%f",valIndiceMatrice);
 	setIndMatrice(i,m,*valIndiceMatrice);
       }
-      else
-	printf("Erreur lors de la lecture du fichier, DIMENSION doit etre specifie avant EDGE_WEIGHT_SECTION\n");
+    
+    }
+    else
+      printf("Erreur lors de la lecture du fichier, DIMENSION doit etre specifie avant EDGE_WEIGHT_SECTION\n");
     fclose(tsp);
     printf(" fait\n");
   }
