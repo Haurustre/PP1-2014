@@ -102,6 +102,7 @@ Matrice chargerMatrice(char * path){
   }
   else{
     printf("Creation de la matrice... ");
+    fscanf(tsp,"%s",var);
     while(strcmp(var, "DIMENSION:") != 0 && !feof(tsp)){
       fscanf(tsp,"%s",var);
     }

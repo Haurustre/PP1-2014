@@ -19,7 +19,6 @@ bool toutVisite(bool * t, int taille){
  **************************************************************/
 void calculerMST(Graphe g){
   printf("Calcule approximatif du chemin le plus court (Prim /Mst)...\n");
-  srand(time(NULL));
   int nbVilleT = getNombreSommets(g);
   int nbArcsT;
   Arc * arcsCroissants = getArcs(&nbArcsT,g);

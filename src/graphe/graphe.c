@@ -86,6 +86,7 @@ Graphe chargerGraphe(char * path){
   }
   else{
     printf("Creation du Graphe... ");
+    fscanf(tsp,"%s",var);
     while(strcmp(var, "DIMENSION:") != 0 && !feof(tsp)){
       fscanf(tsp,"%s",var);
     }

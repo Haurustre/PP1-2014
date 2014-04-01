@@ -76,6 +76,15 @@ static void destroy( GtkWidget *widget,gpointer   data ){
 }
 
 int main( int   argc,char *argv[] ){
+  /* g = chargerGraphe("res/exemple10.tsp");
+  m = chargerMatrice("res/exemple10.tsp");
+
+  calculerMST(g);
+  heuristiqueMatrice(m);
+
+  deleteGraphe(g);
+  deleteMatrice(m);*/
+
 
     GtkWidget *window;
     GtkWidget *buttonChargerTSP;
@@ -126,6 +135,7 @@ int main( int   argc,char *argv[] ){
     g_signal_connect(buttonGraphe[1], "clicked",G_CALLBACK(buttonCalculerMST), NULL);
     g_signal_connect(buttonChargerTSP, "clicked",G_CALLBACK(buttonCharger), NULL);
     gtk_main ();
+
     
     return 0;
 }
