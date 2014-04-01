@@ -45,8 +45,7 @@ int getSommetB(Arc a){
 }
 
 void afficherArc(Arc a){
-  printf("Arc : Sommet A:%d  Sommet B:%d ",a->sommetA,a->sommetB);
-  printf("Distance:%f\n",a->distance);
+  printf("%d <--- %f ---> %d\n",a->sommetA,a->distance,a->sommetB);
 }
 
 void deleteArc(Arc a){
@@ -168,10 +167,9 @@ void afficherGraphe(Graphe g){
   printf("Graphe de %d sommets\n",g->nbS);
    int i,j;
    for(i = 0; i < g->nbS; i++){
-     printf("Sommet %d de %d arcs :\n", i, g->adjs[i].nbAdj);
+     printf("\n");
      for(j = 0; j < g->adjs[i].nbAdj; j++)
        afficherArc(g->adjs[i].arcs[j]);
-     printf("\n");
    }
 }
 
