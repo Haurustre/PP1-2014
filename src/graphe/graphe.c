@@ -5,6 +5,8 @@
 #include <errno.h>
 #include <string.h>
 
+char arc[256]="";
+
 struct arc{
   int sommetA;
   int sommetB;
@@ -45,8 +47,11 @@ int getSommetB(Arc a){
   return a->sommetB;
 }
 
-void afficherArc(Arc a){
-  printf("%d <--- %f ---> %d\n",a->sommetA,a->distance,a->sommetB);
+char * afficherArc(Arc a){
+  arc[0] ='\0';
+  sprintf(arc,"%s%d->%d:%f; ",arc,a->sommetA,a->sommetB,a->distance);
+
+  return arc;
 }
 
 void deleteArc(Arc a){
@@ -74,7 +79,7 @@ Graphe chargerGraphe(char * path){
   int * nbSommetGraphe = malloc(sizeof(int));
   float * valArcGraphe = malloc(sizeof(float));
 
-  printf("Ouverture du fichier %s\n",path);
+  //printf("Ouverture du fichier %s\n",path);
   FILE * tsp = fopen(path,"r");
 
   if(tsp == NULL){
@@ -85,7 +90,7 @@ Graphe chargerGraphe(char * path){
       printf("Erreur inconnue\n");
   }
   else{
-    printf("Creation du Graphe... ");
+    //printf("Creation du Graphe... ");
     fscanf(tsp,"%s",var);
     while(strcmp(var, "DIMENSION:") != 0 && !feof(tsp)){
       fscanf(tsp,"%s",var);
@@ -112,7 +117,7 @@ Graphe chargerGraphe(char * path){
     else
       printf("Erreur lors de la lecture du fichier, DIMENSION doit etre specifie avant EDGE_WEIGHT_SECTION\n");
     fclose(tsp);
-    printf(" fait\n");
+    //printf(" fait\n");
   }
   free(valArcGraphe);
   free(nbSommetGraphe);
@@ -170,16 +175,27 @@ double sommetsDistance(int sA, int sB, Graphe g){
   return -1;
 }
 
-void afficherGraphe(Graphe g){
+void afficherGraphe(Graphe g, char * ret){
+  ret[0] = '\0';
+  sprintf(ret,"Graphe de %d sommets",g->nbS);
+   int i,j;
+   for(i = 0; i < g->nbS; i++){
+     strcat(ret, "\n");
+     for(j = 0; j < g->adjs[i].nbAdj; j++){
+       strcat(ret,afficherArc(g->adjs[i].arcs[j]));
+     }
+   }
+}
+void afficherGrapheTerminal(Graphe g){
   printf("Graphe de %d sommets\n",g->nbS);
    int i,j;
    for(i = 0; i < g->nbS; i++){
      printf("\n");
      for(j = 0; j < g->adjs[i].nbAdj; j++)
-       afficherArc(g->adjs[i].arcs[j]);
+       printf("%s\n",afficherArc(g->adjs[i].arcs[j]));
    }
+   printf("\n");
 }
-
 void deleteGraphe(Graphe g){
   int i,j;
   for(i = 0; i < g->nbS; i++){

@@ -2,6 +2,7 @@
 #define __MATRICE_H__
 
 #include <errno.h>
+#include <stdbool.h>
 
 struct matrice;
 
@@ -18,9 +19,12 @@ void setCell(int, int, Matrice, double);
 void setIndMatrice(int, Matrice, double);
 
 void afficherMatrice(Matrice);
-void afficherMatriceInt(Matrice);
+void afficherMatriceInt(Matrice, char*);
 
 Matrice chargerMatrice(char * path);
+
+bool matriceSymetrique(Matrice);
+bool matricePlanaire(Matrice);
 
 void deleteMatrice(Matrice);
 

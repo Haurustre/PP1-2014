@@ -13,7 +13,7 @@ double getDistance(Arc);
 bool estAdjacent(int, Arc);
 int getSommetA(Arc);
 int getSommetB(Arc);
-void afficherArc(Arc);
+char * afficherArc(Arc);
 void deleteArc(Arc);
 
 Graphe initGraphe(int);//Graphe de N sommets
@@ -26,7 +26,8 @@ void supprimerArc(int,int,Graphe);//supprime les arc (deux sens) entre ville 1 e
 bool sommetsAdjacent(int,int,Graphe);//vrai si les deux villes possèdent un arc en commun
 double sommetsDistance(int,int,Graphe);//distance entre deux sommets adjacents
 
-void afficherGraphe(Graphe);//debug
+void afficherGraphe(Graphe,char *);//debug
+void afficherGrapheTerminal(Graphe);//debug
 
 void deleteGraphe(Graphe);
 

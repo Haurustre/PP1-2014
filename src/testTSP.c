@@ -3,17 +3,34 @@
 #include <graphe.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <heuristique.h>
 #include <mst.h>
 
 static Matrice m;
 static Graphe g;
+//char affiche[2048];
 
 static void buttonAfficherMatriceInt( GtkWidget *widget,gpointer   data ){
   if(m == NULL)
     printf("Erreur: Aucune matrice chargee\n");
-  else
-    afficherMatriceInt(m);
+  else{
+    char affiche[2048];
+    if(getLargeurMatrice(m) < 15){
+    afficherMatriceInt(m,affiche);
+    }
+    else
+      sprintf(affiche,"Matrice trop grande pour etre affiche dans une fenetre");
+    GtkWidget *p_information = gtk_message_dialog_new (GTK_WINDOW(data),
+						       GTK_DIALOG_MODAL,
+						       GTK_MESSAGE_INFO,
+						       GTK_BUTTONS_OK,
+						       "%s",affiche);
+    //gtk_window_set_default_size(GTK_WINDOW(p_information), 400, 400);
+    gtk_window_set_resizable (GTK_WINDOW(p_information), TRUE);
+    gtk_dialog_run(GTK_DIALOG(p_information));
+    gtk_widget_destroy(p_information);
+  }
 }
 static void buttonAfficherMatrice( GtkWidget *widget,gpointer   data ){
   if(m == NULL)
@@ -30,6 +47,7 @@ static void buttonHeuristiqueMatrice( GtkWidget *widget,gpointer   data ){
 
 static void buttonCharger( GtkWidget *widget,gpointer   data ){
   GtkWidget *p_dialog = NULL;
+  GtkWidget *p_information;
 
   p_dialog = gtk_file_chooser_dialog_new ("Charger un probleme tsp", NULL,
                                           GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -43,22 +61,60 @@ static void buttonCharger( GtkWidget *widget,gpointer   data ){
     file_name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (p_dialog));
     g = chargerGraphe(file_name);
     m = chargerMatrice(file_name);
+
     g_free (file_name), file_name = NULL;
   }
+gtk_widget_destroy (p_dialog);
+  if(!matriceSymetrique(m)){
+    p_information = gtk_message_dialog_new (GTK_WINDOW(data),
+					  GTK_DIALOG_MODAL,
+					  GTK_MESSAGE_INFO,
+					  GTK_BUTTONS_OK,
+					  "Attention ! Matrice asymétrique !");
+    gtk_dialog_run(GTK_DIALOG(p_information));
+gtk_widget_destroy(p_information);
+  }
+  else if(!matricePlanaire(m)){  
+    p_information = gtk_message_dialog_new (GTK_WINDOW(data),
+					  GTK_DIALOG_MODAL,
+					  GTK_MESSAGE_INFO,
+					  GTK_BUTTONS_OK,
+					  "Attention ! Matrice non planaire !");
+    gtk_dialog_run(GTK_DIALOG(p_information));
+    gtk_widget_destroy(p_information);
+  }
 
-  gtk_widget_destroy (p_dialog);
 }
+
 static void buttonAfficherGraphe( GtkWidget *widget,gpointer   data ){
   if(g == NULL)
     printf("Erreur: Aucun graphe charge\n");
-  else
-    afficherGraphe(g);
+  else{
+    char affiche[2048];
+    if(getNombreSommets(g) <= 10){
+      afficherGraphe(g,affiche);
+    }
+    else{
+      affiche[0] = '\0';
+      strcat(affiche,"Affichage trop long pour etre affiché en fenetre");
+      afficherGrapheTerminal(g);
+     }
+    GtkWidget *p_information = gtk_message_dialog_new (GTK_WINDOW(data),
+						       GTK_DIALOG_MODAL,
+						       GTK_MESSAGE_INFO,
+						       GTK_BUTTONS_OK,
+						       "%s",affiche);
+    gtk_dialog_run(GTK_DIALOG(p_information));
+    gtk_widget_destroy(p_information);
+  }
 }
+
 static void buttonCalculerMST( GtkWidget *widget,gpointer   data ){
   if(g == NULL)
     printf("Erreur: Aucun graphe charge\n");
   else{
     calculerMST(g);
+
   }
 }
 
@@ -106,8 +162,8 @@ int main( int   argc,char *argv[] ){
     gtk_table_attach_defaults(GTK_TABLE(table), buttonChargerTSP,0,200,0,50);
     //--------Matrice -------------------------------
     titre[0] = gtk_label_new("Matrice");
-    buttonMatrice[0] = gtk_button_new_with_label("Afficher la Matrice (entiers)");
-    buttonMatrice[1] = gtk_button_new_with_label("Afficher la Matrice (float)");
+    buttonMatrice[0] = gtk_button_new_with_label("Afficher la Matrice (Fenetre)");
+    buttonMatrice[1] = gtk_button_new_with_label("Afficher la Matrice (Terminal)");
     buttonMatrice[2] = gtk_button_new_with_label("Calculer heuristique");
 
 

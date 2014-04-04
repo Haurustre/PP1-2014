@@ -66,14 +66,15 @@ void afficherMatrice(Matrice m){
   }
 }
 
-void afficherMatriceInt(Matrice m){
-  printf("Matrice %d x %d :\n",m->largeur,m->largeur);
+void afficherMatriceInt(Matrice m, char * ret){
+  ret[0] = '\0';
+  sprintf(ret,"Matrice %d x %d :\n",m->largeur,m->largeur);
   int i,j=0;
   for(i = 0; i < m->tailleMat; i++){
-    printf(" %d",(int)m->mat[i]);
+    sprintf(ret,"%s %2d",ret,(int)m->mat[i]);
     j++;
     if((m->largeur) == j){
-      printf("\n");
+      strcat(ret,"\n");
       j=0;
     }
   }
@@ -90,7 +91,7 @@ Matrice chargerMatrice(char * path){
   int i;
   float *valIndiceMatrice = malloc(sizeof(float));
 
-  printf("Ouverture du fichier %s\n",path);
+  //printf("Ouverture du fichier %s\n",path);
   FILE * tsp = fopen(path,"r");
 
   if(tsp == NULL){
@@ -101,7 +102,7 @@ Matrice chargerMatrice(char * path){
       printf("Erreur inconnue\n");
   }
   else{
-    printf("Creation de la matrice... ");
+    //printf("Creation de la matrice... ");
     fscanf(tsp,"%s",var);
     while(strcmp(var, "DIMENSION:") != 0 && !feof(tsp)){
       fscanf(tsp,"%s",var);
@@ -122,13 +123,44 @@ Matrice chargerMatrice(char * path){
     else
       printf("Erreur lors de la lecture du fichier, DIMENSION doit etre specifie avant EDGE_WEIGHT_SECTION\n");
     fclose(tsp);
-    printf(" fait\n");
+    //printf(" fait\n");
   }
   free(valIndiceMatrice);
   free(tailleMatrice);
   return m;
 }
 
+bool matriceSymetrique(Matrice m){
+  int y,x;
+  for(x = 0; x < m->largeur ; x++){
+    for(y = x; y < m->largeur ; y++){
+      if(x == y && m->mat[y*(m->largeur)+x]!=0)
+        return false;//diagonale pas a zero
+      if(m->mat[y*(m->largeur)+x] != m->mat[x*(m->largeur)+y])
+	return false;
+    }
+  }
+  return true;
+}
+
+bool matricePlanaire(Matrice m){
+  int y,x,z;
+  for(x = 0; x < m->largeur ; x++){
+    for(y = 0; y < m->largeur ; y++){
+      if(x != y){
+	for(z = 0; z < m->largeur; z++){
+	  if(z != y){
+	    if( m->mat[y*(m->largeur)+x] >  m->mat[y*(m->largeur)+z]
+		+ m->mat[z*(m->largeur)+x])
+	      return false;
+	    
+	  }
+	}
+      }
+    }
+  }
+  return true;
+}
 
 void deleteMatrice(Matrice m){
   free(m->mat);
