@@ -9,6 +9,13 @@
 
 static Matrice m;
 static Graphe g;
+
+GtkWidget *window;
+GtkWidget *buttonChargerTSP;
+GtkWidget *buttonMatrice[3];
+GtkWidget *buttonGraphe[2];
+GtkWidget *table;
+GtkWidget *titre[2];
 //char affiche[2048];
 
 static void afficherMessage(char * msg,gpointer data){
@@ -22,9 +29,56 @@ static void afficherMessage(char * msg,gpointer data){
     gtk_widget_destroy(p_information);
 }
 
+static int choixEntier(char *msg, int min, int max,gpointer data){
+  int choix = -1;
+  GtkWidget* pBoite;
+  GtkWidget* pEntry;
+ 
+  /* Création de la boite de dialogue */
+  /* 1 bouton Valider */
+  /* 1 bouton Annuler */
+  pBoite = gtk_dialog_new_with_buttons("Choisir la ville de depart",
+				       GTK_WINDOW(window),
+				       GTK_DIALOG_MODAL,
+				       GTK_STOCK_OK,GTK_RESPONSE_OK,
+				       GTK_STOCK_CANCEL,GTK_RESPONSE_CANCEL,
+				       NULL);
+ 
+  /* Création de la zone de saisie */
+  pEntry = gtk_entry_new();
+  gtk_entry_set_text(GTK_ENTRY(pEntry), "Numero ville");
+  /* Insertion de la zone de saisie dans la boite de dialogue */
+  /* Rappel : paramètre 1 de gtk_box_pack_start de type GtkBox */
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(pBoite)->vbox), pEntry, TRUE, FALSE, 0);
+ 
+  /* Affichage des éléments de la boite de dialogue */
+  gtk_widget_show_all(GTK_DIALOG(pBoite)->vbox);
+ 
+  /* On lance la boite de dialogue et on récupéré la réponse */
+  switch (gtk_dialog_run(GTK_DIALOG(pBoite)))
+    {
+      /* L utilisateur valide */
+    case GTK_RESPONSE_OK:
+      choix = atoi(gtk_entry_get_text(GTK_ENTRY(pEntry)));
+      break;
+      /* L utilisateur annule */
+    case GTK_RESPONSE_CANCEL:
+    case GTK_RESPONSE_NONE:
+    default: break;
+    }
+
+  /* Destruction de la boite de dialogue */
+  gtk_widget_destroy(pBoite);
+
+  if(choix < min || choix > max)
+    choix = -1;
+
+  return choix;
+}
+
 static void buttonAfficherMatriceInt( GtkWidget *widget,gpointer   data ){
   if(m == NULL)
-    printf("Erreur: Aucune matrice chargee\n");
+    afficherMessage("Erreur: Aucune matrice chargee",data);
   else{
     char affiche[2048];
     if(getLargeurMatrice(m) < 15){
@@ -45,7 +99,11 @@ static void buttonHeuristiqueMatrice( GtkWidget *widget,gpointer   data ){
   if(m == NULL)
     afficherMessage("Erreur: Aucune matrice chargee",data);
   else{
-    heuristiqueMatrice(m);
+    int choix = choixEntier("test",0,getLargeurMatrice(m)-1,data);
+    if(choix == -1)
+      afficherMessage("Ville invalide !",data);
+    else
+      heuristiqueVille(m,choix);
   }
 }
 
@@ -128,13 +186,6 @@ int main( int   argc,char *argv[] ){
   deleteGraphe(g);
   deleteMatrice(m);*/
 
-
-    GtkWidget *window;
-    GtkWidget *buttonChargerTSP;
-    GtkWidget *buttonMatrice[3];
-    GtkWidget *buttonGraphe[2];
-    GtkWidget *table;
-    GtkWidget *titre[2];
     gtk_init (&argc, &argv);    
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);   
     g_signal_connect(window, "delete-event",G_CALLBACK(delete_event), NULL);
