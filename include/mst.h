@@ -5,5 +5,6 @@
 #include <stdbool.h>
 
 void calculerMST(Graphe g);
+void calculerMSTVille(Graphe,int);
 
 #endif

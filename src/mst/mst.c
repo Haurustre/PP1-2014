@@ -99,3 +99,77 @@ void calculerMST(Graphe g){
   free(chemin);
   free(minChemin);
 }
+/**************************************************************
+ *Auteur: Ghislain Hudry                       Date:12/03/14
+ *Param: Graphe g
+ *Affiche le chemin le plus court trouvé par L'algo de Prim
+ *(avec tri bulle).
+ **************************************************************/
+void calculerMSTVille(Graphe g,int ind){
+  printf("Calcule approximatif du chemin le plus court (Prim /Mst)...\n");
+  int nbVilleT = getNombreSommets(g);
+  int nbArcsT;
+  Arc * arcsCroissants = getArcs(&nbArcsT,g);
+  Arc * chemin = malloc(sizeof(Arc)*(nbVilleT));
+
+  int i;
+  Arc arcTmp;
+  bool echange = true;
+  //tri Bulle du tableau d'Arc de facon croissante
+  while(echange){
+    echange = false;
+    for(i=0;i < nbArcsT-1;i++){
+      if(getDistance(arcsCroissants[i]) > getDistance(arcsCroissants[i+1])){
+	echange = true;
+	arcTmp = arcsCroissants[i];
+	arcsCroissants[i] = arcsCroissants[i+1];
+	arcsCroissants[i+1] = arcTmp;
+      }
+    }
+  }
+
+  bool * ville = malloc(sizeof(bool) * nbVilleT );
+  int j = ind;
+  int villeActuel;
+  double distance;
+  int nbVilleChemin = 0;
+ 
+    for(i = 0; i < nbVilleT; i++)//remise a zero, aucune ville visité...
+      ville[i] = false;
+    ville[j] = true;// ...excepté celle de depart
+    villeActuel = j;//;;placement du "curseur" de ville
+    distance = 0;
+    nbVilleChemin = 0;
+    while(!toutVisite(ville,nbVilleT)){//Recherche du trajet le plus court partant de la ville J
+      for(i=0;i < nbArcsT-1;i++){ //On parcourt le tableau d'arc trié en ordre croissant
+	if(getSommetA(arcsCroissants[i]) ==  villeActuel){ //le premier arc trouvé correspondant est alors retenu...
+	  if(!ville[getSommetB(arcsCroissants[i])]){//...Cest a dire qui va de la ville actuel a une ville non visité
+	    villeActuel = getSommetB(arcsCroissants[i]);//le "curseur" ville devient la nouvelle ville
+	    chemin[nbVilleChemin++] = arcsCroissants[i];//on ajoute l arc au chemin
+	    distance += getDistance(arcsCroissants[i]);//on ajoute a la distance du chemin
+	    ville[villeActuel] = true;
+	    break;//Quand on a trouvé un Arc il faut recommencer le parcourt du tableau d arc trié depuis le debut
+	    //donc un break pour sortir de la boucle for
+	  }//if
+	}//if
+      }//for
+    }//while
+
+    //retour:
+    distance+=sommetsDistance(j,villeActuel,g);
+    chemin[nbVilleT-1] = getArc(villeActuel,j,g);
+
+
+  printf("Le Trajet le plus court mesure %f\n",distance);
+  for(i=0; i<(nbVilleT); i++){//affiche les sommets -1
+    printf("%d ",getSommetA(chemin[i]));
+    distance = i;
+  }
+  printf("%d ",getSommetB(chemin[(int)distance]));
+  printf("\n");//affiche dernier sommet
+  // Algo de prim
+
+  free(ville);
+  free(arcsCroissants);
+  free(chemin);
+}

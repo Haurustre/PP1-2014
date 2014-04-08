@@ -105,8 +105,10 @@ static void buttonHeuristiqueMatrice( GtkWidget *widget,gpointer   data ){
   if(m == NULL)
     afficherMessage("Erreur: Aucune matrice chargee",data);
   else{
-    if(choix == -1)
-      afficherMessage("Ville invalide !",data);
+    if(choix == -1){
+      afficherMessage("Aucune ville de depart sélectionnée\nCalcule du chemin optimal",data);
+      heuristiqueMatrice(m);
+    }
     else
       heuristiqueVille(m,choix);
   }
@@ -163,7 +165,12 @@ static void buttonCalculerMST( GtkWidget *widget,gpointer   data ){
   if(g == NULL)
     afficherMessage("Erreur: Aucun graphe charge",data);
   else{
-    calculerMST(g);
+    if(choix == -1){
+      afficherMessage("Aucune ville de depart sélectionnée\nCalcule du parcourt optimal",data);
+      calculerMST(g);
+    }
+    else
+      calculerMSTVille(g,choix);
 
   }
 }
