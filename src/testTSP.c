@@ -12,11 +12,14 @@ static Graphe g;
 
 GtkWidget *window;
 GtkWidget *buttonChargerTSP;
+GtkWidget *buttonChoix;
+GtkWidget *label_choix;
 GtkWidget *buttonMatrice[3];
 GtkWidget *buttonGraphe[2];
 GtkWidget *table;
 GtkWidget *titre[2];
 //char affiche[2048];
+int choix = -1;
 
 static void afficherMessage(char * msg,gpointer data){
   GtkWidget *p_information = gtk_message_dialog_new (GTK_WINDOW(data),
@@ -29,8 +32,8 @@ static void afficherMessage(char * msg,gpointer data){
     gtk_widget_destroy(p_information);
 }
 
-static int choixEntier(char *msg, int min, int max,gpointer data){
-  int choix = -1;
+static void buttonChoixVille(GtkWidget * widget,gpointer data){
+  if(m != NULL){
   GtkWidget* pBoite;
   GtkWidget* pEntry;
  
@@ -60,20 +63,23 @@ static int choixEntier(char *msg, int min, int max,gpointer data){
       /* L utilisateur valide */
     case GTK_RESPONSE_OK:
       choix = atoi(gtk_entry_get_text(GTK_ENTRY(pEntry)));
+      gtk_label_set_text(GTK_LABEL(label_choix),gtk_entry_get_text(GTK_ENTRY(pEntry)));
       break;
       /* L utilisateur annule */
     case GTK_RESPONSE_CANCEL:
+      break;
     case GTK_RESPONSE_NONE:
+      break;
     default: break;
     }
-
+  if(choix < 0 || choix > getLargeurMatrice(m)-1)
+    choix = -1;
   /* Destruction de la boite de dialogue */
   gtk_widget_destroy(pBoite);
-
-  if(choix < min || choix > max)
-    choix = -1;
-
-  return choix;
+  }
+  else{
+    afficherMessage("Erreur: chargez un fichier tsp avant de choisir la ville de depart",data);
+  }
 }
 
 static void buttonAfficherMatriceInt( GtkWidget *widget,gpointer   data ){
@@ -99,7 +105,6 @@ static void buttonHeuristiqueMatrice( GtkWidget *widget,gpointer   data ){
   if(m == NULL)
     afficherMessage("Erreur: Aucune matrice chargee",data);
   else{
-    int choix = choixEntier("test",0,getLargeurMatrice(m)-1,data);
     if(choix == -1)
       afficherMessage("Ville invalide !",data);
     else
@@ -191,13 +196,17 @@ int main( int   argc,char *argv[] ){
     g_signal_connect(window, "delete-event",G_CALLBACK(delete_event), NULL);
     g_signal_connect(window, "destroy",G_CALLBACK(destroy), NULL);
     
+    buttonChoix = gtk_button_new_with_label("Ville de depart :");
+    label_choix = gtk_label_new("Aucune");
     //---box-------------------------------------
-    table = gtk_table_new(150,150,TRUE);
-    gtk_container_set_border_width(GTK_CONTAINER(window),10); 
+    table = gtk_table_new(150,100,TRUE);
+    gtk_container_set_border_width(GTK_CONTAINER(window),5); 
     gtk_container_add(GTK_CONTAINER (window),table);
 
     buttonChargerTSP = gtk_button_new_with_label("Charger Matrice et Graphe");
-    gtk_table_attach_defaults(GTK_TABLE(table), buttonChargerTSP,0,200,0,50);
+    gtk_table_attach_defaults(GTK_TABLE(table), buttonChargerTSP,0,100,0,25);
+    gtk_table_attach_defaults(GTK_TABLE(table), buttonChoix,0,50,25,50);
+    gtk_table_attach_defaults(GTK_TABLE(table), label_choix,50,100,25,50);
     //--------Matrice -------------------------------
     titre[0] = gtk_label_new("Matrice");
     buttonMatrice[0] = gtk_button_new_with_label("Afficher la Matrice (Fenetre)");
@@ -205,19 +214,20 @@ int main( int   argc,char *argv[] ){
     buttonMatrice[2] = gtk_button_new_with_label("Calculer heuristique");
 
 
-    gtk_table_attach_defaults(GTK_TABLE(table),titre[0], 0,100,50,100);
+    gtk_table_attach_defaults(GTK_TABLE(table),titre[0], 0,50,50,75);
 
-    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[0], 0,100,110,160);
-    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[1], 0,100,160,210);
-    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[2], 0,100,220,270);
+    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[0], 0,50,75,100);
+    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[1], 0,50,100,125);
+    gtk_table_attach_defaults(GTK_TABLE(table),buttonMatrice[2], 0,50,125,150);
     //-------Graphe------------------------------------
     titre[1] = gtk_label_new("Graphe");
     buttonGraphe[0] = gtk_button_new_with_label("Afficher le Graphe");
     buttonGraphe[1] = gtk_button_new_with_label("Calculer MST");
 
-    gtk_table_attach_defaults(GTK_TABLE(table), titre[1],100,200,50,100);
-    gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[0],100,200,110,160);
-    gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[1],100,200,220,270);
+    gtk_table_attach_defaults(GTK_TABLE(table), titre[1],50,100,50,75);
+
+    gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[0],50,100,75,100);
+    gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[1],50,100,125,150);
 
     //-------Connection des actions-----------------------------------
     gtk_widget_show_all(window);
@@ -228,6 +238,7 @@ int main( int   argc,char *argv[] ){
     g_signal_connect(buttonGraphe[0], "clicked",G_CALLBACK(buttonAfficherGraphe), NULL);
     g_signal_connect(buttonGraphe[1], "clicked",G_CALLBACK(buttonCalculerMST), NULL);
     g_signal_connect(buttonChargerTSP, "clicked",G_CALLBACK(buttonCharger), NULL);
+    g_signal_connect(buttonChoix, "clicked",G_CALLBACK(buttonChoixVille), NULL);
     gtk_main ();
 
     

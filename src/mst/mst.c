@@ -58,7 +58,6 @@ void calculerMST(Graphe g){
       for(i=0;i < nbArcsT-1;i++){ //On parcourt le tableau d'arc trié en ordre croissant
 	if(getSommetA(arcsCroissants[i]) ==  villeActuel){ //le premier arc trouvé correspondant est alors retenu...
 	  if(!ville[getSommetB(arcsCroissants[i])]){//...Cest a dire qui va de la ville actuel a une ville non visité
-
 	    villeActuel = getSommetB(arcsCroissants[i]);//le "curseur" ville devient la nouvelle ville
 	    chemin[nbVilleChemin++] = arcsCroissants[i];//on ajoute l arc au chemin
 	    distance += getDistance(arcsCroissants[i]);//on ajoute a la distance du chemin
