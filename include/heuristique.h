@@ -6,6 +6,7 @@
 
 int * heuristiqueSommet(Matrice);
 
+void heuristiqueVille(Matrice,int);
 void heuristiqueMatrice(Matrice);
 
 

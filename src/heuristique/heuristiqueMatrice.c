@@ -39,10 +39,36 @@ int villeProche( int * trajet, int ind, Matrice m){
   }
   return villeProche;
 }
-
 /*************************************************************
 *Author: Ghislain Hudry                            Date: 06/03/14
-*Return: Affiche le trajet le plus court de la matrice
+*Return: Affiche le trajet le plus court de la matrice en partant d'un sommet donné (heuristique)
+*Param:  Matrice, int i (ville de depart)
+**************************************************************/
+void heuristiqueVille(Matrice m, int i){
+  double distance;
+  int nbVilles = getLargeurMatrice(m);
+  int * trajet = malloc(sizeof(int) * (nbVilles+1));
+  int j,k;
+
+  trajet[0] = i;
+  distance = 0;
+  for(j = 1; j < nbVilles; j++){
+    trajet[j] = villeProche(trajet,j-1,m);
+    distance += getCell(trajet[j-1],trajet[j],m);
+  }
+  //retour:
+  trajet[nbVilles] = i;
+  distance += getCell(trajet[nbVilles-1],i,m);
+  
+  printf("Le Trajet le plus court mesure %f\n",distance);
+  for(i = 0; i < nbVilles+1; i++)
+    printf("%d ",trajet[i]);
+  printf("\n");
+
+}
+/*************************************************************
+*Author: Ghislain Hudry                            Date: 06/03/14
+*Return: Affiche le trajet le plus court de la matrice (heuristique)
 *Param:  Matrice
 **************************************************************/
 void heuristiqueMatrice(Matrice m){
