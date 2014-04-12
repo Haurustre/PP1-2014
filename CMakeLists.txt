@@ -20,8 +20,8 @@ add_executable(src/testTSP
                src/testTSP.c
                src/heuristique/heuristiqueMatrice.c
 	       src/mst/mst.c
-	       src/rechercheExhaustive/rechercheExhaust.c)
-	       src/brutForce/brutForce.c)
+	       src/rechercheExhaustive/rechercheExhaust.c
+	     src/brutForce/brutForce.c)
 
 
 TARGET_LINK_LIBRARIES(src/testTSP matrice graphe ${GTK_LIBRARIES})
