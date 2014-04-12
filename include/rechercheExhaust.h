@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 
-void rechercheExhaustRecur(Graphe , int, int*, int);
-void retournerTab(Graphe );
+int * BruteForce(Graphe , int*, int);
+int * retournerTab(Graphe );
 
 #endif
