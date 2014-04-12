@@ -19,6 +19,7 @@ add_library(graphe SHARED src/graphe/graphe.c)
 add_executable(src/testTSP 
                src/testTSP.c
                src/heuristique/heuristiqueMatrice.c
-	       src/mst/mst.c)
+	       src/mst/mst.c
+	       src/brutForce/brutForce.c)
 
 TARGET_LINK_LIBRARIES(src/testTSP matrice graphe ${GTK_LIBRARIES})
