@@ -50,12 +50,12 @@ void arrangements(arrgt *arr, int k, int *L, int *t) {
 }
 
 void brutForce(Graphe g, int villeDep){
-  int n, p, i, j, anp, *L, *t;
+  int n, p, i, j, anp, *L, *t,ind;
   arrgt * arr = (arrgt *)malloc(sizeof(arrgt));
 
   int nbVille = getNombreSommets(g);
-  n = nbVille;
-  p = nbVille;
+  n = nbVille-1;
+  p = nbVille-1;
   for(i=n , j=0, anp=1 ; i > n-p ; i--, j++)//calcul du nombre d'arrengements
     anp *= i;
  
@@ -68,23 +68,26 @@ void brutForce(Graphe g, int villeDep){
   //Initialisation des params
   L = (int *) malloc(p*sizeof(int));
   t = (int *) malloc(n*sizeof(int));
-  for(i=0;i<n;i++) t[i] = i;//Ensemble des chiffres dans les arrangements
-
+  for(i=0,ind=0;i<n;i++,ind++){
+    if(i == villeDep)
+      ind++;
+    t[i] = ind;//Ensemble des chiffres dans les arrangements
+  }
   arrangements(arr, 0, L, t);
 
   //initialisation du trajetCourt
   int * trajet = malloc(sizeof(int)*nbVille+1);//retour +1
   int * trajetCourt = malloc(sizeof(int)*nbVille+1);
-  recopierTableau(arr->tab[0], trajetCourt, nbVille);
+  recopierTableau(arr->tab[0], trajetCourt+1, nbVille-1);
   trajetCourt[nbVille] = villeDep;//retour
+  trajetCourt[0] = villeDep;//allé
 
   for(i=0;i<arr->anp;i++){
-    if(arr->tab[i][0] == villeDep){
-      recopierTableau(arr->tab[i], trajet,nbVille);
+      recopierTableau(arr->tab[i], trajet+1,nbVille-1);
       trajet[nbVille] = villeDep;//retour toujours
+      trajet[0] = villeDep;//allé toujours
       if(distanceTrajet(trajet,g) < distanceTrajet(trajetCourt,g))
 	recopierTableau(trajet,trajetCourt,nbVille+1);
-    }
   }
   for(j=0;j<nbVille+1;j++) {
     printf("%d ",trajetCourt[j]);
