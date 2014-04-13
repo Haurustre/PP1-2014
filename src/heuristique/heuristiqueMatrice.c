@@ -3,6 +3,7 @@
  * \file brutForce.c
  * \brief Toutes les fonctions utile à l'heuristique
  * \author Ghislain Hudry
+ * \author Jimmy Gustan
  * \version 0.1
  * \date 11 Mars 2014
  *

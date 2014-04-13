@@ -2,6 +2,7 @@
  * \file brutForce.c
  * \brief Toues les fonctions utile au brut force
  * \author Ghislain Hudry
+ * \author Jimmy Gustan
  * \version 0.1
  * \date 9 Avril 2014
  *
