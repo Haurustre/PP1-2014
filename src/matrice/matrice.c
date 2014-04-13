@@ -14,6 +14,12 @@
 #include <stdio.h>
 #include <string.h>
 
+/**
+ * \struct matrice
+ * \brief Objet matrice
+ * Structure permettant de créer un tableau à deux dimensions avec une largeur et une taille donnée.
+ */
+
 struct matrice{
   double* mat;
   int largeur;
@@ -22,11 +28,28 @@ struct matrice{
 
 typedef struct matrice * Matrice;
 
+/**
+ * \fn int getIndiceXY(int x, int y, Matrice m)
+ * \brief Fonction retournant la valeur des coordonnées x et y dans la matrice en paramètre.
+ * \param a l'indice x
+ * \param b l'indice y
+ * \param c la matrice m
+ * \return l'indice des coordonnées pris en paramètre.
+ */
+
 int getIndiceXY(int x, int y, Matrice m){
   int ind = y * (m->largeur) + x;
   assert(ind >= 0 && ind < m->tailleMat); 
   return(ind);
 }
+
+/**
+ * \fn Matrice initMatrice(int largeur)
+ * \brief Fonction d'initialisation de la matrice.
+ *
+ * \param a la largeur de la matrice
+ * \return Instance nouvellement allouée d'un objet de type Matrice.
+ */
 
 Matrice initMatrice(int largeur){
   Matrice m = malloc(sizeof(struct matrice));
@@ -41,27 +64,81 @@ Matrice initMatrice(int largeur){
 
   return m;
 }
+/**
+ * \fn int getLargeurMatrice(Matrice m)
+ * \brief Fonction qui renvoie la largeur de la Matrice m.
+ *
+ * \param a la Matrice m
+ * \return Nombre Réel de type int contenant la largeur de la Matrice.
+ */
 
 int getLargeurMatrice(Matrice m){
   return m->largeur;
 }
 
+/**
+ * \fn int getTailleMatrice(Matrice m)
+ * \brief Fonction qui renvoie la taille de la Matrice m.
+ *
+ * \param a la Matrice m
+ * \return Nombre Réel de type int contenant la taille de la Matrice.
+ */
+
 int getTailleMatrice(Matrice m){
   return m->tailleMat;
 }
+
+/**
+ * \fn double getCell(int x, int y, Matrice m)
+ * \brief Fonction qui renvoie la cellule de la Matrice m.
+ *
+ * \param a la coordonnée x
+ * \param b la coordonnée y
+ * \param c la Matrice m
+ * \return Nombre Réel de type double contenant l'indice des coordonnées mis en paramètre de la Matrice.
+ */
 
 double getCell(int x, int y, Matrice m){
   return(m->mat[getIndiceXY(x,y,m)]);
 }
 
+/**
+ * \fn void setCell(int x, int y, Matrice m, double val)
+ * \brief Fonction qui définie une nouvelle valeur à la cellule mise en paramètre.
+ * \param a la coordonnée x
+ * \param b la coordonnée y
+ * \param c la Matrice m
+ * \param d la nouvelle valeur
+ * \return void
+ */
+
 void setCell(int x, int y, Matrice m, double val){
   m->mat[getIndiceXY(x,y,m)] = val;
 }
 
+
+
+/**
+ * \fn void setIndMatrice(int ind, Matrice m, double val)
+ * \brief Fonction qui définie une nouvelle valeur à l'indice mis en paramètre.
+ * \param a l'indice 
+ * \param b la Matrice m
+ * \param c la nouvelle valeur
+ * \return void
+ */
 void setIndMatrice(int ind, Matrice m, double val){
   assert(ind > -1 && ind < m->tailleMat);
   m->mat[ind] = val;
 }
+
+
+/**
+ * \fn void afficherMatrice(Matrice m)
+ * \brief Fonction qui affiche la Matrice avec des nombres float
+ * \param a la Matrice m
+ * \return void
+ */
+
 
 void afficherMatrice(Matrice m){
   printf("Matrice %d x %d :\n",m->largeur,m->largeur);
@@ -75,6 +152,13 @@ void afficherMatrice(Matrice m){
     }
   }
 }
+/**
+ * \fn void afficherMatriceInt(Matrice m, char * ret)
+ * \brief Fonction qui affiche la Matrice avec des nombres int
+ * \param a la Matrice m
+ * \param b la chaîne de caractère ret
+ * \return void
+ */
 
 void afficherMatriceInt(Matrice m, char * ret){
   ret[0] = '\0';
@@ -90,10 +174,13 @@ void afficherMatriceInt(Matrice m, char * ret){
   }
 }
 
-/*******************************************************
- *Auteur: Ghislain Hudry                Date:06/03/14  *
- *Charge une Matrice en fonction du test fichier ouvert*
- *******************************************************/
+/**
+ * \fn Matrice chargerMatrice(char * path)
+ * \brief Fonction qui charge une Matrice à partir des fichiers personnels
+ * \param a une chaîne de caractère décrivant le chemin du fichier
+ * \return une Matrice m.
+ */
+
 Matrice chargerMatrice(char * path){
   Matrice m;
   char var[1000];
@@ -140,6 +227,13 @@ Matrice chargerMatrice(char * path){
   return m;
 }
 
+/**
+ * \fn bool matriceSymetrique(Matrice m)
+ * \brief Fonction qui teste si une matrice est symétrique ou pas
+ * \param a la Matrice m
+ * \return void
+ */
+
 bool matriceSymetrique(Matrice m){
   int y,x;
   for(x = 0; x < m->largeur ; x++){
@@ -152,6 +246,14 @@ bool matriceSymetrique(Matrice m){
   }
   return true;
 }
+
+/**
+ * \fn bool matricePlanaire(Matrice m)
+ * \brief Fonction qui teste si une matrice est planaire ou pas
+ * \param a la Matrice m
+ * \return void
+ */
+
 
 bool matricePlanaire(Matrice m){
   int y,x,z;
