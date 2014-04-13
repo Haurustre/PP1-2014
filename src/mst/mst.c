@@ -1,9 +1,28 @@
+
+/**
+ * \file brutForce.c
+ * \brief Toutes les fonctions utiles pour le minimum spanning tree 
+ * \author Ghislain Hudry
+ * \version 0.1
+ * \date 18 Mars 2014
+ *
+ *
+ */
+
 #include <graphe.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 
+
+/**
+ * \fn bool toutVisite(bool * t, int taille)
+ * \brief La fonction vérifie si le tableau de type bool contient uniquement que des "true" ou pas
+ * \param a le tableau de type bool
+ * \param b la taille du tableau
+ * \return un boolean en fonction de la recherche.
+ */
 bool toutVisite(bool * t, int taille){
   int i;
   for(i = 0; i < taille; i++)
@@ -11,12 +30,14 @@ bool toutVisite(bool * t, int taille){
       return false;
   return true;
 }
-/**************************************************************
- *Auteur: Ghislain Hudry                       Date:12/03/14
- *Param: Graphe g
- *Affiche le chemin le plus court trouvé par L'algo de Prim
- *(avec tri bulle).
- **************************************************************/
+
+/**
+ * \fn void calculerMST(Graphe g)
+ * \brief La fonction qui calcule le minimum spanning tree dans le Graphe g en commençant par tous les sommets puis trouvant le meilleure 
+ * \param a le Graphe g
+ * \return void
+ */
+
 void calculerMST(Graphe g){
   printf("Calcule approximatif du chemin le plus court (Prim /Mst)...\n");
   int nbVilleT = getNombreSommets(g);
@@ -99,12 +120,15 @@ void calculerMST(Graphe g){
   free(chemin);
   free(minChemin);
 }
-/**************************************************************
- *Auteur: Ghislain Hudry                       Date:12/03/14
- *Param: Graphe g
- *Affiche le chemin le plus court trouvé par L'algo de Prim
- *(avec tri bulle).
- **************************************************************/
+
+/**
+ * \fn void calculerMSTVille(Graphe g,int ind)
+ * \brief  La fonction qui calcule le minimum spanning tree à partir d'un sommet uniquement
+ * \param a le Graphe g
+ * \param b le sommet
+ * \return void
+ */
+
 void calculerMSTVille(Graphe g,int ind){
   printf("Calcule approximatif du chemin le plus court (Prim /Mst)...\n");
   int nbVilleT = getNombreSommets(g);
