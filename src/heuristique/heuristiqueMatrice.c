@@ -1,3 +1,13 @@
+
+/**
+ * \file brutForce.c
+ * \brief Toutes les fonctions utile à l'heuristique
+ * \author Ghislain Hudry
+ * \version 0.1
+ * \date 11 Mars 2014
+ *
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -5,11 +15,17 @@
 #include <heuristique.h>
 
 
-/*************************************************************
-*Author: Ghislain Hudry                            Date: 06/03/14
-*Return: ville parcouru/ville non parcouru
-*Param:  numéro sommet, trajet parcouru, indice execution, Matrice
-**************************************************************/
+
+/**
+ * \fn bool parcouru(int ville, int * trajet, int ind, Matrice m)
+ * \brief Recherche si une ville est dans un tableau de villes.
+ *
+ * \param a la ville à vérifier
+ * \param b tableau de villes
+ * \param c la longueur du tableau
+ * \param d la matrice M
+ * \return un booléen en fonction du résultat de la recherche.
+ */
 bool parcouru(int ville, int * trajet, int ind, Matrice m){
   int i;
 
@@ -20,11 +36,16 @@ bool parcouru(int ville, int * trajet, int ind, Matrice m){
   return false;
 }
 
-/*************************************************************
-*Author: Ghislain Hudry                            Date: 06/03/14
-*Return: Renvoie la ville la plus proche de ind
-*Param:  trajet, indice execution, matrice
-**************************************************************/
+
+/**
+ * \fn int villeProche( int * trajet, int ind, Matrice m)
+ * \brief Recherche la ville la plus proche d'une ville donnée dans la Matrice m.
+ * \param a tableau de villes déjà parcourues
+ * \param b la longueur du tableau
+ * \param c la matrice M
+ * \return la ville de type int la plus proche de la ville passée en paramètre.
+ */
+
 int villeProche( int * trajet, int ind, Matrice m){
   double distance = -1;
   int villeProche = -1;
@@ -37,13 +58,18 @@ int villeProche( int * trajet, int ind, Matrice m){
       }
     }  
   }
-  return villeProche;
+ villeProche;
 }
-/*************************************************************
-*Author: Ghislain Hudry                            Date: 06/03/14
-*Return: Affiche le trajet le plus court de la matrice en partant d'un sommet donné (heuristique)
-*Param:  Matrice, int i (ville de depart)
-**************************************************************/
+
+/**
+ * \fn void heuristiqueVille(Matrice m, int i)
+ * \brief La fonction permettant de calculer le chemin heuristique à partir d'un sommet.
+ * \param a la Matrice m
+ * \param b le sommet i
+ * \return void
+ */
+
+
 void heuristiqueVille(Matrice m, int i){
   double distance;
   int nbVilles = getLargeurMatrice(m);
@@ -66,11 +92,14 @@ void heuristiqueVille(Matrice m, int i){
   printf("\n");
 
 }
-/*************************************************************
-*Author: Ghislain Hudry                            Date: 06/03/14
-*Return: Affiche le trajet le plus court de la matrice (heuristique)
-*Param:  Matrice
-**************************************************************/
+
+/**
+ * \fn void heuristiqueMatrice(Matrice m
+ * \brief La fonction permettant de calculer l'heuristique à partir de tous les sommets en trouvant celui le plus court.
+ * \param a la Matrice m
+ * \return void
+ */
+
 void heuristiqueMatrice(Matrice m){
   printf("Calcul heuristique du chemin le plus court...\n");
 
