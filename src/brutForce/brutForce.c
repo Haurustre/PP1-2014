@@ -1,9 +1,24 @@
+/**
+ * \file brutForce.c
+ * \brief Toues les fonctions utile au brut force
+ * \author Ghislain Hudry
+ * \version 0.1
+ * \date 9 Avril 2014
+ *
+ *
+ */
 #include <brutForce.h>
 #include <stdbool.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+ * \struct arrgt
+ * \brief Objet Arrangement
+ *
+ *  Structure stockant tous les arrangements possibles d'une suite de chiffres
+ */
 typedef struct arrgt {
 	int n,    // Le nombre de chiffres differents
 	    p,    // le nombre de chiffres dans un arrangement
@@ -12,12 +27,29 @@ typedef struct arrgt {
 	    **tab; // tableau de "anp" ligne, chaque ligne contient un arrangement
 } arrgt;
 
+/**
+ * \fn void recopierTableau(int *t1, int * t2, int taille)
+ * \brief Recopie un Tableau dans un autre
+ *
+ * \param t1 Tableau source
+ * \param t2 Tableau destination
+ * \param taille le nombre de case à recopier, ou la taille min des tableaux
+ * \return void
+ */
 void recopierTableau(int *t1, int * t2, int taille){
   int i;
   for(i=0 ; i < taille; i++)
     t2[i] = t1[i];
 }
 
+/**
+ * \fn double distanceTrajet(int * tab, Graphe g)
+ * \brief Calcule la longueur d'un trajet à partir d'un tableau de ville
+ *
+ * \param tab tableau de villes
+ * \param g Graphe
+ * \return distance total parcouru
+ */
 double distanceTrajet(int * tab, Graphe g){
   int nbVille = getNombreSommets(g)+1;
   int  i;
@@ -28,7 +60,17 @@ double distanceTrajet(int * tab, Graphe g){
   return distance;
 }
 
-void arrangements(arrgt *arr, int k, int *L, int *t) {
+/**
+ * \fn void arrangements(arrgt *arr, int k, int *L, int *t)
+ * \brief Calcule tous les arrengements possibles et les stocke dans la structure arrgt
+ *
+ * \param arr Référence vers une structure arrgt
+ * \param k contient la taille max d'un arrangement
+ * \param L contient les arrengements en cours de création
+ * \param t contient l'ensemble des entier utiliser dans les arrengements
+ * \return void
+ */
+void arrangements(arrgt *arr, int k, int *L, int *t){
   int n = arr->n, p = arr->p, i, j, j1, t2[n];
   
   if(k==p){
@@ -49,6 +91,14 @@ void arrangements(arrgt *arr, int k, int *L, int *t) {
   }
 }
 
+/**
+ * \fn void brutForce(Graphe g, int villeDep)
+ * \brief Calcule tous les arrengements puis choisit l arrangement le plus court en prenant compte du retour
+ *
+ * \param g Graphe
+ * \param villeDep ville de depart
+ * \return void
+ */
 void brutForce(Graphe g, int villeDep){
   int n, p, i, j, anp, *L, *t,ind;
   arrgt * arr = (arrgt *)malloc(sizeof(arrgt));
