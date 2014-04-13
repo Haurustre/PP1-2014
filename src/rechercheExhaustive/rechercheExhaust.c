@@ -5,68 +5,18 @@
 
 
    
-/*************************************************************
-*Author:  gustan jimmy                             Date: 28/03/14
-*Return: si oui ou non le sommet est dans le tableau
-*Param: 
- graphe g
- int sommet
- tableau parcouru
-**************************************************************/
-
-
-bool rechercheParcouru(int sommet,int *parcouru,Graphe g){
-  int nbVilleT = getNombreSommets(g);
-  int i;
-  for ( i=0; i<nbVilleT; i++)
-    if( parcouru[i]==sommet)
-      return true;
-  return false;
-}
-
-
-
-   
-/*************************************************************
-*Author:  gustan jimmy                             Date: 28/03/14
-*Return: le chemin de sommet le plus court à partir du sommet "sommet" par recherche exhaustive
-*Param: 
- graphe g
- sommet de départ "sommet"
- le comptabiliseur de sommet parcouru "depart"
- le tableau des sommets déjà parcouru "parcouru"
-**************************************************************/
-/*
-void rechercheExhaustRecur(Graphe g, int sommet, int* parcouru, int depart){
-  /*il faut mettre en paramètre un tableau de taille u nombre de sommets, depart doit etre obligatoirement 0, le graphe g et le sommet sont quelconques 
-  int nbVilleT = getNombreSommets(g);
-  int i;
-  int ** tab=malloc(sizeof(int*)*nbVilleT-1);
-  parcouru[depart]=sommet;
-  if (nbVilleT<depart) 
-    return ;
-  for(i=0; i<nbVilleT; i++)
-    if (i!=sommet)
-      if (!rechercheParcouru(i,parcouru,g))
-	tab[i]=sommetsDistance(sommet,i,g);
-  int fin=0;
-  int mini=tab[0];
-  for(i=0; i<nbVilleT-1;i++)
-    if(tab[i]<mini){
-      mini=tab[i];
-      fin=i;
-    }
-  parcouru[depart+1]=fin;
-  rechercheExhaustRecur(g,i,parcouru,depart+1);
-  free(tab);
-}
+/**
+  *\author:  gustan jimmy                             
+  *\date: 28/03/14
+  *\brief Echange la valeur des deux indices dans le tableau pris en paramètre, tout en gardant la même valeur sur l'indice 0 et le dernier.
+  *\param a  l'indice 1
+  *\param b l'indice 2
+  *\param c le tableau
+  *\param d la longueur du tableau
 */
 
 
-
-
-
-int echanger(int premierSommet, int secondSommet, int * tableau, int longueurTab){
+void echanger(int premierSommet, int secondSommet, int * tableau, int longueurTab){
   if(premierSommet==0){
     int tmp=tableau[premierSommet];
     tableau[premierSommet]= tableau[secondSommet];
@@ -115,7 +65,28 @@ int* BruteForce(Graphe g, int * sommets, int sommetDepart){
   return BruteForce(g,sommets,sommetDepart+1) ;
   free( sommets1);
 }
-
+int * BruteForceVersion2(Graphe G, int * sommets){
+  
+  int i, somme1, somme2, nombreVille, compteurDeVille;
+  compteurDeVille = 0; // définit à combien de ville on en est pour le tour de boucle mais aussi quel ville est sélectionné.
+  nombreVille = getNombreSommets(g);
+  int * sommets1=malloc(sizeof(int*)*nombreVille+1);
+  for(i=0; i<=nombreVille(g);i++)
+    sommets1[i]=sommets[i];
+  somme1=sommeTab(sommets,nombreVille, g);
+  while (compteurDeVille<nombreVille){
+    for(i=0; i<nombreVille; i++)
+      if (compteurDeVile!=i){
+	echanger( compteurDeville, i, sommets, nombreVille );
+	somme2=sommeTab(sommets, nombreVille, g);
+	sommets=sommePlusPetite(sommets, sommets1, nombreVille, g);
+      }
+    compteurDeVille++;
+  }
+  free(sommets1);
+  return sommets;
+}
+    
 
 int * retournerTab(Graphe g){
   int i;
