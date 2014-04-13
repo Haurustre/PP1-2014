@@ -1,3 +1,13 @@
+/**
+ * \file matrice.c
+ * \brief Source de la bibliotheque matrice
+ * \author Ghislain Hudry
+ * \version 0.1
+ * \date 18 Janvier 2014
+ *
+ * Structure de la Matrice
+ *
+ */
 #include <matrice.h>
 #include <assert.h>
 #include <stdlib.h>

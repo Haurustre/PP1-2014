@@ -1,3 +1,13 @@
+/**
+ * \file testTSP.c
+ * \brief Programmede test
+ * \author Ghislain Hudry
+ * \version 0.1
+ * \date 14 Fevrier 2014
+ *
+ * Programme avec interface graphique testant les algorithmes.
+ *
+ */
 #include <gtk/gtk.h>
 #include <matrice.h>
 #include <graphe.h>
@@ -22,6 +32,12 @@ GtkWidget *titre[2];
 //char affiche[2048];
 int choix = -1;
 
+/**
+ * \fn static void afficherMessage(char * msg,gpointer data)
+ * \brief Affiche simplement un message d'information
+ *
+ * \return void
+ */
 static void afficherMessage(char * msg,gpointer data){
   GtkWidget *p_information = gtk_message_dialog_new (GTK_WINDOW(data),
 						       GTK_DIALOG_MODAL,
@@ -33,6 +49,12 @@ static void afficherMessage(char * msg,gpointer data){
     gtk_widget_destroy(p_information);
 }
 
+/**
+ * \fn static void buttonChoixVille(GtkWidget * widget,gpointer data)
+ * \brief Permet de choisir une ville de départ pour lancer ensuite les algorithmes
+ *
+ * \return void
+ */
 static void buttonChoixVille(GtkWidget * widget,gpointer data){
   if(m != NULL){
   GtkWidget* pBoite;
@@ -115,6 +137,12 @@ static void buttonHeuristiqueMatrice( GtkWidget *widget,gpointer   data ){
   }
 }
 
+/**
+ * \fn static void buttonCharger( GtkWidget *widget,gpointer   data )
+ * \brief charge les deux structures Graphe et Matrice à partir d'un explorateur de fichier simple
+ *
+ * \return void
+ */
 static void buttonCharger( GtkWidget *widget,gpointer   data ){
   GtkWidget *p_dialog = NULL;
   GtkWidget *p_information;
@@ -188,6 +216,12 @@ static void buttonCalculerBrutForce( GtkWidget *widget,gpointer   data ){
   }
 }
 
+/**
+ * \fn static gboolean delete_event( GtkWidget *widget,GdkEvent  *event,gpointer   data )
+ * \brief Permet de liberer la mémoire lorsque l'on ferme l'interface graĥique
+ *
+ * \return void
+ */
 static gboolean delete_event( GtkWidget *widget,GdkEvent  *event,gpointer   data ){
   if(m != NULL)
     deleteMatrice(m);
@@ -201,6 +235,12 @@ static void destroy( GtkWidget *widget,gpointer   data ){
     gtk_main_quit ();
 }
 
+/**
+ * \fn int main( int   argc,char *argv[] )
+ * \brief Entrée du programme.
+ *
+ * \return EXIT_SUCCESS - Arrêt normal du programme.
+ */
 int main( int   argc,char *argv[] ){
   /*g = chargerGraphe("res/exemple10.tsp");
    m = chargerMatrice("res/exemple10.tsp");
