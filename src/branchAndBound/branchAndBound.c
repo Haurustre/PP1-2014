@@ -1,15 +1,14 @@
 /**
- * \file brandAndBound.c
- * \brief Toutes les fonctions utiles au branch & bound
- * \author Ghislain Hudry
+
+ * \file branchAndBound.c
+ * \brief Algorithme Branch and bound dérivé du brut Force
  * \author Jimmy Gustan
  * \version 0.1
- * \date 11 Avril 2014
+ * \date 12 Avril 2014
  *
+ * 
  *
  */
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <graphe.h>

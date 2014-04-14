@@ -258,7 +258,6 @@ static void destroy( GtkWidget *widget,gpointer   data ){
 int main( int   argc,char *argv[] ){
   /* g = chargerGraphe("../res/exemple10.tsp");
   branchAndBound(g, 0);
-  /*
    m = chargerMatrice("res/exemple10.tsp");
 
   calculerMST(g);
