@@ -131,12 +131,12 @@ void brutForce(Graphe g, int villeDep){
   int * trajetCourt = malloc(sizeof(int)*nbVille+1);
   recopierTableau(arr->tab[0], trajetCourt+1, nbVille-1);
   trajetCourt[nbVille] = villeDep;//retour
-  trajetCourt[0] = villeDep;//allé
+  trajetCourt[0] = villeDep;//aller
 
   for(i=0;i<arr->anp;i++){
       recopierTableau(arr->tab[i], trajet+1,nbVille-1);
       trajet[nbVille] = villeDep;//retour toujours
-      trajet[0] = villeDep;//allé toujours
+      trajet[0] = villeDep;//aller toujours
       if(distanceTrajet(trajet,g) < distanceTrajet(trajetCourt,g))
 	recopierTableau(trajet,trajetCourt,nbVille+1);
   }

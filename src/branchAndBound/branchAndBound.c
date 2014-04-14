@@ -1,3 +1,15 @@
+/**
+ * \file brandAndBound.c
+ * \brief Toutes les fonctions utiles au branch & bound
+ * \author Ghislain Hudry
+ * \author Jimmy Gustan
+ * \version 0.1
+ * \date 11 Avril 2014
+ *
+ *
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <graphe.h>
@@ -5,7 +17,7 @@
 #include <brutForce.h>
 
 /**
- * \struct arrgt
+ * \struct arrgt1
  * \brief Objet Arrangement
  *
  *  Structure stockant tous les arrangements possibles d'une suite de chiffres
@@ -19,7 +31,7 @@ typedef struct arrgt1 {
 } arrgt1;
 
 /**
- * \fn void recopierTableau(int *t1, int * t2, int taille)
+ * \fn void recopierTableau1(int *t1, int * t2, int taille)
  * \brief Recopie un Tableau dans un autre
  *
  * \param t1 Tableau source
@@ -35,7 +47,7 @@ void recopierTableau1(int *t1, int * t2, int taille){
 }
 
 /**
- * \fn double distanceTrajet(int * tab, Graphe g)
+ * \fn double distanceTrajet2(int * tab, Graphe g)
  * \brief Calcule la longueur d'un trajet à partir d'un tableau de ville
  *
  * \param tab tableau de villes
@@ -53,6 +65,15 @@ double distanceTrajet2(int * tab, Graphe g){
   return distance;
 }
 
+/**
+ * \fn double distanceTrajet1(int * tab, Graphe g, double distanceTrajetCourt)
+ * \brief Calcule la longueur d'un trajet à partir d'un tableau de ville ou jusqu'a ce que cette longueur soir égal ou supérieur à celle du trajet le plus court trouvé précémment.
+ *
+ * \param a tab tableau de villes
+ * \param b g Graphe
+ * \param c distanceTrajetCourt double
+ * \return distance total parcouru ou distanceTrajetCourt.
+ */
 double distanceTrajet1(int * tab, Graphe g, double distanceTrajetCourt){
   int nbVille = getNombreSommets(g)+1;
   int  i;
@@ -66,7 +87,7 @@ double distanceTrajet1(int * tab, Graphe g, double distanceTrajetCourt){
 }
 
 /**
- * \fn void arrangements(arrgt *arr, int k, int *L, int *t)
+ * \fn void arrangements1(arrgt *arr, int k, int *L, int *t)
  * \brief Calcule tous les arrangements possibles et les stocke dans la structure arrgt
  *
  * \param arr Référence vers une structure arrgt
@@ -98,7 +119,7 @@ void arrangements1(arrgt1 *arr, int k, int *L, int *t){
 }
 
 /**
- * \fn void brutForce(Graphe g, int villeDep)
+ * \fn void branchAndBound(Graphe g, int villeDep)
  * \brief Calcule tous les arrangements puis choisit l arrangement le plus court en prenant compte du retour
  *
  * \param g Graphe
@@ -137,15 +158,15 @@ void branchAndBound(Graphe g, int villeDep){
   int * trajetCourt = malloc(sizeof(int)*nbVille+1);
   recopierTableau1(arr->tab[0], trajetCourt+1, nbVille-1);
   trajetCourt[nbVille] = villeDep;//retour
-  trajetCourt[0] = villeDep;//allé
+  trajetCourt[0] = villeDep;//aller
 
   for(i=0;i<arr->anp;i++){
       recopierTableau1(arr->tab[i], trajet+1,nbVille-1);
       trajet[nbVille] = villeDep;//retour toujours
-      trajet[0] = villeDep;//allé toujours
-      distanceTrajetCourt=distanceTrajet2(trajetCourt,g);
-	if(distanceTrajet1(trajet,g, distanceTrajetCourt) < distanceTrajet1(trajetCourt,g, distanceTrajetCourt))
-	  recopierTableau1(trajet,trajetCourt,nbVille+1);
+      trajet[0] = villeDep;//aller toujours
+      distanceTrajetCourt=distanceTrajet2(trajetCourt,g);// sauvegarde du trajet le plus court parcouru
+      if(distanceTrajet1(trajet,g, distanceTrajetCourt) < distanceTrajet1(trajetCourt,g, distanceTrajetCourt))
+	recopierTableau1(trajet,trajetCourt,nbVille+1);
   }
   for(j=0;j<nbVille+1;j++) {
     printf("%d ",trajetCourt[j]);
