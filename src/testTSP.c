@@ -17,6 +17,7 @@
 #include <heuristique.h>
 #include <mst.h>
 #include <brutForce.h>
+#include <branchandbound.h>
 
 static Matrice m;
 static Graphe g;
@@ -242,7 +243,9 @@ static void destroy( GtkWidget *widget,gpointer   data ){
  * \return EXIT_SUCCESS - Arrêt normal du programme.
  */
 int main( int   argc,char *argv[] ){
-  /*g = chargerGraphe("res/exemple10.tsp");
+  g = chargerGraphe("../res/exemple10.tsp");
+  branchAndBound(g, 0);
+  /*
    m = chargerMatrice("res/exemple10.tsp");
 
   calculerMST(g);

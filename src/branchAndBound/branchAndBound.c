@@ -143,14 +143,14 @@ void branchAndBound(Graphe g, int villeDep){
       recopierTableau1(arr->tab[i], trajet+1,nbVille-1);
       trajet[nbVille] = villeDep;//retour toujours
       trajet[0] = villeDep;//allé toujours
-      distanceTrajetCourt=distanceTrajet(trajetCourt,g);
+      distanceTrajetCourt=distanceTrajet2(trajetCourt,g);
 	if(distanceTrajet1(trajet,g, distanceTrajetCourt) < distanceTrajet1(trajetCourt,g, distanceTrajetCourt))
 	  recopierTableau1(trajet,trajetCourt,nbVille+1);
   }
   for(j=0;j<nbVille+1;j++) {
     printf("%d ",trajetCourt[j]);
   }
-  printf("\nDistance parcouru : %f\n",distanceTrajet(trajetCourt,g));
+  printf("\nDistance parcouru : %f\n",distanceTrajet2(trajetCourt,g));
 
   free(L);
   free(t);
