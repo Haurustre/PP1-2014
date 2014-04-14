@@ -27,7 +27,7 @@ GtkWidget *buttonChargerTSP;
 GtkWidget *buttonChoix;
 GtkWidget *label_choix;
 GtkWidget *buttonMatrice[3];
-GtkWidget *buttonGraphe[3];
+GtkWidget *buttonGraphe[4];
 GtkWidget *table;
 GtkWidget *titre[2];
 //char affiche[2048];
@@ -217,6 +217,19 @@ static void buttonCalculerBrutForce( GtkWidget *widget,gpointer   data ){
   }
 }
 
+static void buttonCalculerBranchAndBound( GtkWidget *widget,gpointer   data ){
+  if(g == NULL)
+    afficherMessage("Erreur: Aucun graphe charge",data);
+  else{
+    if(choix == -1)
+      afficherMessage("Aucune ville de depart sélectionnée\n",data);
+    else
+      branchAndBound(g, choix);
+
+  }
+
+}
+
 /**
  * \fn static gboolean delete_event( GtkWidget *widget,GdkEvent  *event,gpointer   data )
  * \brief Permet de liberer la mémoire lorsque l'on ferme l'interface graĥique
@@ -243,7 +256,7 @@ static void destroy( GtkWidget *widget,gpointer   data ){
  * \return EXIT_SUCCESS - Arrêt normal du programme.
  */
 int main( int   argc,char *argv[] ){
-  g = chargerGraphe("../res/exemple10.tsp");
+  /* g = chargerGraphe("../res/exemple10.tsp");
   branchAndBound(g, 0);
   /*
    m = chargerMatrice("res/exemple10.tsp");
@@ -287,12 +300,14 @@ int main( int   argc,char *argv[] ){
   buttonGraphe[0] = gtk_button_new_with_label("Afficher le Graphe");
   buttonGraphe[1] = gtk_button_new_with_label("Calculer MST");
   buttonGraphe[2] = gtk_button_new_with_label("Calculer Brut Force");
+  buttonGraphe[3] = gtk_button_new_with_label("Calculer Branch & Bound");
 
   gtk_table_attach_defaults(GTK_TABLE(table), titre[1],50,100,50,75);
   
   gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[0],50,100,75,100);
-  gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[1],50,100,125,150);
-  gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[2],50,100,150,175);
+  gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[1],50,100,100,125);
+  gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[2],50,100,125,150);
+  gtk_table_attach_defaults(GTK_TABLE(table), buttonGraphe[3],50,100,150,175);
   //-------Connection des actions-----------------------------------
   gtk_widget_show_all(window);
   
@@ -302,6 +317,7 @@ int main( int   argc,char *argv[] ){
   g_signal_connect(buttonGraphe[0], "clicked",G_CALLBACK(buttonAfficherGraphe), NULL);
   g_signal_connect(buttonGraphe[1], "clicked",G_CALLBACK(buttonCalculerMST), NULL);
   g_signal_connect(buttonGraphe[2], "clicked",G_CALLBACK(buttonCalculerBrutForce), NULL);
+  g_signal_connect(buttonGraphe[3], "clicked",G_CALLBACK(buttonCalculerBranchAndBound), NULL);
   g_signal_connect(buttonChargerTSP, "clicked",G_CALLBACK(buttonCharger), NULL);
   g_signal_connect(buttonChoix, "clicked",G_CALLBACK(buttonChoixVille), NULL);
   gtk_main ();

@@ -1,6 +1,6 @@
 /**
  * \file brutForce.c
- * \brief Toues les fonctions utile au brut force
+ * \brief Toutes les fonctions utiles au brut force
  * \author Ghislain Hudry
  * \author Jimmy Gustan
  * \version 0.1
@@ -21,7 +21,7 @@
  *  Structure stockant tous les arrangements possibles d'une suite de chiffres
  */
 typedef struct arrgt {
-	int n,    // Le nombre de chiffres differents
+	int n,    // Le nombre de chiffres différents
 	    p,    // le nombre de chiffres dans un arrangement
 	    anp,  // Nombre d'arrangement
 	    pos,  // Pointeur pour parcourir les arrangement
@@ -67,8 +67,8 @@ double distanceTrajet(int * tab, Graphe g){
  *
  * \param arr Référence vers une structure arrgt
  * \param k contient la taille max d'un arrangement
- * \param L contient les arrengements en cours de création
- * \param t contient l'ensemble des entier utiliser dans les arrengements
+ * \param L contient les arrangements en cours de création
+ * \param t contient l'ensemble des entiers utilisés dans les arrangements
  * \return void
  */
 void arrangements(arrgt *arr, int k, int *L, int *t){
@@ -94,7 +94,7 @@ void arrangements(arrgt *arr, int k, int *L, int *t){
 
 /**
  * \fn void brutForce(Graphe g, int villeDep)
- * \brief Calcule tous les arrengements puis choisit l arrangement le plus court en prenant compte du retour
+ * \brief Calcule tous les arrangements puis choisit l arrangement le plus court en prenant compte du retour
  *
  * \param g Graphe
  * \param villeDep ville de depart
@@ -107,7 +107,7 @@ void brutForce(Graphe g, int villeDep){
   int nbVille = getNombreSommets(g);
   n = nbVille-1;
   p = nbVille-1;
-  for(i=n , j=0, anp=1 ; i > n-p ; i--, j++)//calcul du nombre d'arrengements
+  for(i=n , j=0, anp=1 ; i > n-p ; i--, j++)//calcul du nombre d'arrangements
     anp *= i;
  
   arr->n = n;
