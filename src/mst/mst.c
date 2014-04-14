@@ -1,6 +1,5 @@
-
 /**
- * \file brutForce.c
+ * \file mst.c
  * \brief Toutes les fonctions utiles pour le minimum spanning tree 
  * \author Ghislain Hudry
  * \version 0.1
@@ -37,7 +36,6 @@ bool toutVisite(bool * t, int taille){
  * \param a le Graphe g
  * \return void
  */
-
 void calculerMST(Graphe g){
   printf("Calcule approximatif du chemin le plus court (Prim /Mst)...\n");
   int nbVilleT = getNombreSommets(g);
@@ -128,7 +126,6 @@ void calculerMST(Graphe g){
  * \param b le sommet
  * \return void
  */
-
 void calculerMSTVille(Graphe g,int ind){
   printf("Calcule approximatif du chemin le plus court (Prim /Mst)...\n");
   int nbVilleT = getNombreSommets(g);

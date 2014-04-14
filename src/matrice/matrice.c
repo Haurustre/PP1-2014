@@ -180,7 +180,6 @@ void afficherMatriceInt(Matrice m, char * ret){
  * \param a une chaîne de caractère décrivant le chemin du fichier
  * \return une Matrice m.
  */
-
 Matrice chargerMatrice(char * path){
   Matrice m;
   char var[1000];

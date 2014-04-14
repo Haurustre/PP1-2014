@@ -1,6 +1,5 @@
-
 /**
- * \file brutForce.c
+ * \file heuristiqueMatrice.c
  * \brief Toutes les fonctions utile à l'heuristique
  * \author Ghislain Hudry
  * \author Jimmy Gustan
@@ -8,7 +7,6 @@
  * \date 11 Mars 2014
  *
  */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -69,8 +67,6 @@ int villeProche( int * trajet, int ind, Matrice m){
  * \param b le sommet i
  * \return void
  */
-
-
 void heuristiqueVille(Matrice m, int i){
   double distance;
   int nbVilles = getLargeurMatrice(m);
@@ -100,7 +96,6 @@ void heuristiqueVille(Matrice m, int i){
  * \param a la Matrice m
  * \return void
  */
-
 void heuristiqueMatrice(Matrice m){
   printf("Calcul heuristique du chemin le plus court...\n");
 

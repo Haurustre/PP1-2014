@@ -1,19 +1,19 @@
+/**
+ * \file recherchExhaust.c
+ *\author:  gustan jimmy                             
+ *\date: 28/03/14
+ *\brief Echange la valeur des deux indices dans le tableau pris en paramètre, tout en gardant la même valeur sur l'indice 0 et le dernier.
+ *\param a  l'indice 1
+ *\param b l'indice 2
+ *\param c le tableau
+ *\param d la longueur du tableau
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <graphe.h>
 #include <rechercheExhaust.h>
 
 
-   
-/**
-  *\author:  gustan jimmy                             
-  *\date: 28/03/14
-  *\brief Echange la valeur des deux indices dans le tableau pris en paramètre, tout en gardant la même valeur sur l'indice 0 et le dernier.
-  *\param a  l'indice 1
-  *\param b l'indice 2
-  *\param c le tableau
-  *\param d la longueur du tableau
-*/
 
 
 void echanger(int premierSommet, int secondSommet, int * tableau, int longueurTab){

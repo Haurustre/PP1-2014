@@ -19,7 +19,7 @@ char arc[256]="";
 
 /**
  * \struct arc
- * \brief Objet graphe
+ * \brief Objet du Graphe contenant les arêtes
  *
  *  arc est en fait une arrête du graphe contenant deux sommets et
  *  la distance qui les séparent
