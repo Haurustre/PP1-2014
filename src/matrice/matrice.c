@@ -19,7 +19,6 @@
  * \brief Objet matrice
  * Structure permettant de créer un tableau à deux dimensions avec une largeur et une taille donnée.
  */
-
 struct matrice{
   double* mat;
   int largeur;
@@ -39,8 +38,8 @@ typedef struct matrice * Matrice;
 
 int getIndiceXY(int x, int y, Matrice m){
   int ind = y * (m->largeur) + x;
-  assert(ind >= 0 && ind < m->tailleMat); 
-  return(ind);
+  // assert(ind >= 0 && ind <= m->tailleMat); 
+  return ind ;
 }
 
 /**

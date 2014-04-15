@@ -28,7 +28,7 @@
 bool parcouru(int ville, int * trajet, int ind, Matrice m){
   int i;
 
-  for(i = 0; i < ind+1; i++){
+  for(i = 0; i < getLargeurMatrice(m); i++){
     if(ville == trajet[i])
       return true;
   }
@@ -57,7 +57,7 @@ int villeProche( int * trajet, int ind, Matrice m){
       }
     }  
   }
- villeProche;
+ return villeProche;
 }
 
 /**
@@ -75,7 +75,7 @@ void heuristiqueVille(Matrice m, int i){
 
   trajet[0] = i;
   distance = 0;
-  for(j = 1; j < nbVilles; j++){
+  for(j = 1; j < nbVilles-1; j++){
     trajet[j] = villeProche(trajet,j-1,m);
     distance += getCell(trajet[j-1],trajet[j],m);
   }
@@ -88,6 +88,7 @@ void heuristiqueVille(Matrice m, int i){
     printf("%d ",trajet[i]);
   printf("\n");
 
+  free(trajet);
 }
 
 /**
