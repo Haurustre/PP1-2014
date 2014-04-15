@@ -25,7 +25,7 @@
  * \param d la matrice M
  * \return un booléen en fonction du résultat de la recherche.
  */
-bool parcouru(int ville, int * trajet, int ind, Matrice m){
+bool parcouru(int ville, int * trajet, Matrice m){
   int i;
 
   for(i = 0; i < getLargeurMatrice(m); i++){
@@ -50,8 +50,8 @@ int villeProche( int * trajet, int ind, Matrice m){
   int villeProche = -1;
   int i;
   for(i = 0; i < getLargeurMatrice(m); i++){
-    if(!parcouru(i,trajet,ind,m)){
-      if(distance == -1 || getCell(ind,i,m)<distance){
+    if(!parcouru(i,trajet,m)){
+      if(distance == -1 || getCell(ind,i,m)<distance || villeProche == -1){
 	distance = getCell(ind,i,m);
 	villeProche = i;
       }
@@ -71,21 +71,22 @@ void heuristiqueVille(Matrice m, int i){
   double distance;
   int nbVilles = getLargeurMatrice(m);
   int * trajet = malloc(sizeof(int) * (nbVilles+1));
-  int j,k;
-
+  int j;
+  int tmp;
+  for(j = 0; j < nbVilles+1; j++) trajet[j] = -1;
   trajet[0] = i;
   distance = 0;
-  for(j = 1; j < nbVilles-1; j++){
+  for(j = 1; j < nbVilles; j++){
     trajet[j] = villeProche(trajet,j-1,m);
     distance += getCell(trajet[j-1],trajet[j],m);
   }
   //retour:
   trajet[nbVilles] = i;
-  distance += getCell(trajet[nbVilles-1],i,m);
+  distance += getCell(trajet[j],i,m);
   
   printf("Le Trajet le plus court mesure %f\n",distance);
-  for(i = 0; i < nbVilles+1; i++)
-    printf("%d ",trajet[i]);
+  for(j = 0; j < nbVilles+1; j++)
+    printf("%d ",trajet[j]);
   printf("\n");
 
   free(trajet);

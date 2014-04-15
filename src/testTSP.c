@@ -130,8 +130,7 @@ static void buttonHeuristiqueMatrice( GtkWidget *widget,gpointer   data ){
     afficherMessage("Erreur: Aucune matrice chargee",data);
   else{
     if(choix == -1){
-      afficherMessage("Aucune ville de depart sélectionnée\nCalcule du chemin optimal",data);
-      heuristiqueMatrice(m);
+      afficherMessage("Aucune ville de depart sélectionnée\n",data);
     }
     else
       heuristiqueVille(m,choix);
